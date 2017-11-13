@@ -24,6 +24,16 @@ public class ControllerTest {
 	}
 	
 	@Test
+	public void test_start_transaction_patronID_retained() {
+		String patronId = "P1";
+		Controller controller = new Controller();
+		
+		Patron patron = controller.startTransaction(patronId);
+		
+		assertEquals("patron name not as expected", "P1", patron.getId());
+	}
+	
+	@Test
 	public void test_set_transaction_type() {
 		Controller controller = new Controller();
 		
@@ -144,6 +154,14 @@ public class ControllerTest {
 		Patron patron = controller.startTransaction("P1");
 		
 		assertEquals("Patron string doesn't match", controller.getActivePatronString(), "Patron ID: P1 Patron Name: Test Patron");
+	}
+	
+	@Test
+	public void test_get_active_patron_string_bad_ID() {
+		Controller controller = new Controller();
+		Patron patron = controller.startTransaction("P9");
+		
+		assertEquals("Patron isn't null", patron == null, true);
 	}
 	
 	@Test

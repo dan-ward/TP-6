@@ -18,6 +18,14 @@ public class FakeDBTest {
 	}
 	
 	@Test
+	public void test_get_textbook() {
+		FakeDB db = new FakeDB();
+		Textbook t = db.getTextbook("T1");
+		assertNotNull("Textbook is null", t);
+		assertEquals("Textbook Id id not as expected", "Test Title", t.getTitle());
+	}	
+	
+	@Test
 	public void test_get_patron() {
 		FakeDB db = new FakeDB();
 		Patron p = db.getPatron("P1");
