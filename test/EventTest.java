@@ -84,5 +84,17 @@ public class EventTest {
 				+ "\n\t" + worker.toString()
 				+ "\n\t" + patron.toString() 
 				, event.toString());
+	}
+	
+	@Test
+	public void test_event_to_string_with_only_message() {
+		String action = "Event with only message";
+		
+		Event event = new Event.EventBuilder(action)
+				.build();
+		
+		assertEquals("event not as expected", event.getEventDateTime().getTime()
+				+ "\n\t" + action
+				, event.toString());
 	}	
 }

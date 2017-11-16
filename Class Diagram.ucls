@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="Event" project="TP-4" file="/TP-4/src/Event.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="225" width="166" x="-112" y="1068"/>    
+    <position height="-1" width="-1" x="131" y="720"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="Event.EventBuilder" project="TP-4" file="/TP-4/src/Event.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="189" width="167" x="-134" y="1333"/>    
+    <position height="-1" width="-1" x="132" y="1090"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,7 +21,7 @@
   </class>  
   <class id="3" language="java" name="FakeDB" project="TP-4" file="/TP-4/src/FakeDB.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="243" width="210" x="157" y="1333"/>    
+    <position height="-1" width="-1" x="867" y="493"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -30,7 +30,7 @@
   </class>  
   <class id="4" language="java" name="Worker" project="TP-4" file="/TP-4/src/Worker.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="225" width="128" x="-51" y="1616"/>    
+    <position height="-1" width="-1" x="860" y="776"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="TRLApp" project="TP-4" file="/TP-4/src/TRLApp.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="225" width="230" x="149" y="129"/>    
+    <position height="-1" width="-1" x="465" y="151"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
   </class>  
   <class id="6" language="java" name="Copy" project="TP-4" file="/TP-4/src/Copy.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="315" width="156" x="253" y="2218"/>    
+    <position height="-1" width="-1" x="470" y="1017"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -56,7 +56,7 @@
     </display>  
   </class>  
   <class id="7" language="java" name="Log" project="TP-4" file="/TP-4/src/Log.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="153" width="138" x="-84" y="875"/>    
+    <position height="-1" width="-1" x="134" y="409"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -65,7 +65,7 @@
   </class>  
   <class id="8" language="java" name="Textbook" project="TP-4" file="/TP-4/src/Textbook.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="135" width="119" x="430" y="2573"/>    
+    <position height="-1" width="-1" x="473" y="1442"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -74,7 +74,7 @@
   </class>  
   <class id="9" language="java" name="Patron" project="TP-4" file="/TP-4/src/Patron.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="351" width="198" x="117" y="1616"/>    
+    <position height="-1" width="-1" x="838" y="1143"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -83,7 +83,7 @@
   </class>  
   <class id="10" language="java" name="Hold" project="TP-4" file="/TP-4/src/Hold.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="171" width="144" x="88" y="2007"/>    
+    <position height="-1" width="-1" x="824" y="1486"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -92,7 +92,7 @@
   </class>  
   <class id="11" language="java" name="HoldException" project="TP-4" file="/TP-4/src/HoldException.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="81" width="130" x="419" y="129"/>    
+    <position height="-1" width="-1" x="712" y="80"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -101,7 +101,7 @@
   </class>  
   <class id="12" language="java" name="Controller" project="TP-4" file="/TP-4/src/Controller.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="441" width="232" x="157" y="394"/>    
+    <position height="441" width="232" x="354" y="302"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -109,214 +109,275 @@
     </display>  
   </class>  
   <association id="13">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="14" name="patronStore"/>      
-      <multiplicity id="15" minimum="0" maximum="2147483647"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="14" name="log">        
+        <position height="0" width="0" x="-86" y="-769"/>      
+      </attribute>      
+      <multiplicity id="15" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-86" y="-769"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
+    <end type="TARGET" refId="7" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="16">    
-    <bendpoint x="397" y="875"/>    
-    <bendpoint x="397" y="1068"/>    
-    <bendpoint x="397" y="1333"/>    
-    <bendpoint x="397" y="1616"/>    
-    <bendpoint x="397" y="2007"/>    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="17" name="activeCopy"/>      
-      <multiplicity id="18" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="19">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="20" name="TRLController"/>      
-      <multiplicity id="21" minimum="0" maximum="1"/>    
+      <attribute id="17" name="TRLController">        
+        <position height="0" width="0" x="-21" y="33"/>      
+      </attribute>      
+      <multiplicity id="18" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-21" y="33"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="22">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="23" name="copy"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="25">    
-    <bendpoint x="105" y="1333"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="26" name="patron"/>      
-      <multiplicity id="27" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="28">    
-    <bendpoint x="262" y="2007"/>    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="29" name="checkedOutCopies"/>      
-      <multiplicity id="30" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="31">    
-    <bendpoint x="84" y="875"/>    
-    <bendpoint x="84" y="1068"/>    
-    <bendpoint x="84" y="1333"/>    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="32" name="activeWorker"/>      
-      <multiplicity id="33" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <nesting id="34">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="2"/>  
-  </nesting>  
-  <association id="35">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="36" name="workerStore"/>      
-      <multiplicity id="37" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="38">    
-    <bendpoint x="418" y="1616"/>    
-    <bendpoint x="439" y="2007"/>    
-    <bendpoint x="439" y="2218"/>    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="39" name="textbookStore"/>      
-      <multiplicity id="40" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="41">    
-    <bendpoint x="439" y="875"/>    
-    <bendpoint x="439" y="1068"/>    
-    <bendpoint x="439" y="1333"/>    
-    <bendpoint x="439" y="1616"/>    
-    <bendpoint x="418" y="2007"/>    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="42" name="checkOutQueue"/>      
-      <multiplicity id="43" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="44">    
-    <bendpoint x="126" y="875"/>    
-    <bendpoint x="126" y="1068"/>    
-    <bendpoint x="126" y="1333"/>    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="45" name="activePatron"/>      
-      <multiplicity id="46" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
-    <bendpoint x="-165" y="1333"/>    
-    <bendpoint x="-165" y="1616"/>    
-    <bendpoint x="-165" y="2007"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="48" name="copy"/>      
-      <multiplicity id="49" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="6" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="50">    
+  <association id="19">    
     <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="51" name="patron"/>      
-      <multiplicity id="52" minimum="0" maximum="1"/>    
+      <attribute id="20" name="patron">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </attribute>      
+      <multiplicity id="21" minimum="0" maximum="1">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="9" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="53">    
-    <bendpoint x="166" y="875"/>    
-    <bendpoint x="166" y="1068"/>    
+  <association id="22">    
+    <bendpoint x="659" y="509"/>    
     <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="54" name="db"/>      
-      <multiplicity id="55" minimum="0" maximum="1"/>    
+      <attribute id="23" name="db">        
+        <position height="0" width="0" x="773" y="-1703"/>      
+      </attribute>      
+      <multiplicity id="24" minimum="0" maximum="1">        
+        <position height="0" width="0" x="773" y="-1703"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="56">    
-    <end type="SOURCE" refId="6" navigable="false">      
-      <attribute id="57" name="textbook"/>      
-      <multiplicity id="58" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="59">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="60" name="worker"/>      
-      <multiplicity id="61" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="62">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="63" name="log"/>      
-      <multiplicity id="64" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="65">    
-    <bendpoint x="-82" y="1616"/>    
-    <bendpoint x="-82" y="2007"/>    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="66" name="copy"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
+  <association id="25">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="26" name="copyStore">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="27" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="68">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="69" name="holds"/>      
-      <multiplicity id="70" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="71">    
-    <bendpoint x="63" y="1333"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="72" name="worker"/>      
-      <multiplicity id="73" minimum="0" maximum="1"/>    
+  <association id="28">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="29" name="workerStore">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="74">    
-    <bendpoint x="345" y="1616"/>    
-    <bendpoint x="345" y="2007"/>    
+  <association id="31">    
+    <bendpoint x="295" y="1055"/>    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="32" name="copy">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="34">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="75" name="copyStore"/>      
-      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
+      <attribute id="35" name="textbookStore">        
+        <position height="0" width="0" x="-192" y="-1106"/>      
+      </attribute>      
+      <multiplicity id="36" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-192" y="-1106"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="37">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="38" name="activeWorker">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </attribute>      
+      <multiplicity id="39" minimum="0" maximum="1">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="40">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="41" name="holds">        
+        <position height="0" width="0" x="641" y="-514"/>      
+      </attribute>      
+      <multiplicity id="42" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="641" y="-514"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="43">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="44" name="activePatron">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="1">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="47" name="log">        
+        <position height="0" width="0" x="-65" y="-636"/>      
+      </attribute>      
+      <multiplicity id="48" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-65" y="-636"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="49">    
+    <bendpoint x="408" y="807"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="50" name="activeCopy">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="51" minimum="0" maximum="1">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="52">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="53" name="checkedOutCopies">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="54" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="55">    
+    <end type="SOURCE" refId="6" navigable="false">      
+      <attribute id="56" name="textbook">        
+        <position height="0" width="0" x="-192" y="-1106"/>      
+      </attribute>      
+      <multiplicity id="57" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-192" y="-1106"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="58">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="59" name="worker">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </attribute>      
+      <multiplicity id="60" minimum="0" maximum="1">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="61">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="62" name="copy">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="63" minimum="0" maximum="1">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="6" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <nesting id="64">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </nesting>  
+  <association id="65">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="66" name="patronStore">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </attribute>      
+      <multiplicity id="67" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="68">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="69" name="worker">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </attribute>      
+      <multiplicity id="70" minimum="0" maximum="1">        
+        <position height="0" width="0" x="777" y="-1252"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="71">    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="72" name="patron">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </attribute>      
+      <multiplicity id="73" minimum="0" maximum="1">        
+        <position height="0" width="0" x="636" y="-556"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="74">    
+    <bendpoint x="558" y="794"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="75" name="checkOutQueue">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="76" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <association id="77">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="78" name="log"/>      
-      <multiplicity id="79" minimum="0" maximum="1"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="78" name="copy">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </attribute>      
+      <multiplicity id="79" minimum="0" maximum="1">        
+        <position height="0" width="0" x="54" y="-1266"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
+    <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
