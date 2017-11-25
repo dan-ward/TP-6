@@ -26,6 +26,14 @@ public class PatronTest {
 	}
 	
 	@Test
+	public void test_set_parton_name() {
+		Patron patron = new Patron("patron123", "p123");
+		patron.setName("Billy");
+		
+		assertEquals("Patron name not set correctly", "Billy", patron.getName());
+	}
+	
+	@Test
 	public void test_patron_to_string() {
 		FakeDB db = new FakeDB();		
 		Patron patron = db.getPatron("P1");

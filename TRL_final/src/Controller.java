@@ -168,11 +168,4 @@ public class Controller {
 		return this.log;
 	}
 	
-	public void checkInAllCopies() {
-		db.checkInAllCopies();
-	}
-	
-	public List<Copy> getAllCheckedOutCopies() {
-		return db.getAllCheckedOutCopies();
-	}
 }

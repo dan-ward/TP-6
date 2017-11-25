@@ -53,10 +53,6 @@ public class Patron {
 		return checkedOutCopies.size();
 	}
 	
-	public List<Copy> getCheckedOutCopies() {
-		return checkedOutCopies;
-	}
-	
 	public void addHold(Hold hold) {
 		holds.add(hold);
 	}

@@ -67,27 +67,4 @@ public class FakeDB {
 		return copyStore.get(key);
 	}
 	
-	public List<Copy> getAllCheckedOutCopies() {
-		List<Copy> checkedOutCopies = new ArrayList<Copy>();
-		for(Copy c: copyStore.values()) {
-			if(c.isCheckedOut()) {
-				checkedOutCopies.add(c);
-			}
-		}
-		return checkedOutCopies;
-	}
-	
-	public void checkInAllCopies() {
-		for(Patron p: patronStore.values()) {
-			List<Copy> patronCopies = new ArrayList<Copy>();
-			patronCopies = p.getCheckedOutCopies();
-			for(Copy c: patronCopies) {
-				c.checkIn();
-				patronCopies.remove(c);
-			}
-		}
-		for(Copy c: copyStore.values()) {
-			c.checkIn();
-		}
-	}	
 }

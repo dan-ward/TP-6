@@ -42,11 +42,6 @@ public class Event {
 			return this;
 		}
 		
-		public EventBuilder action(String action) {
-			this.action = action;
-			return this;
-		}
-		
 		public Event build() {
 			return new Event(this);
 		}

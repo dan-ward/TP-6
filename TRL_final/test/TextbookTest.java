@@ -14,4 +14,13 @@ public class TextbookTest {
 		Textbook textbook = new Textbook("This is a Test Title");
 		assertEquals("title failure", "This is a Test Title", textbook.getTitle());
 	}
+	
+	@Test
+	public void test_set_title() {
+		Textbook textbook = new Textbook("This is a Test Title");
+		assertEquals("title failure", "This is a Test Title", textbook.getTitle());
+		
+		textbook.setTitle("Second edition");
+		assertEquals("title not set correctly", "Second edition", textbook.getTitle());
+	}
 }

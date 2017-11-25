@@ -52,8 +52,12 @@ public class CopyTest {
 		calendar.add(Calendar.DAY_OF_MONTH, 14); 
 		
 		c.checkOut();
-		assertEquals("copy should be due in 14 days", calendar.getTime().toString(), c.getDueDate().toString()); 		
+		assertEquals("copy should be due in 14 days", calendar.getTime().toString(), c.getDueDate().toString());
 		
+		calendar.add(Calendar.DAY_OF_MONTH, 14);
+		c.setDueDate(calendar);
+		
+		assertEquals("copy should be due in 28 days", calendar.getTime().toString(), c.getDueDate().toString());
 	}
 	
 	@Test

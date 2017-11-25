@@ -275,4 +275,21 @@ public class ControllerTest {
 		copy2.checkIn();
 		patron.checkInCopy(copy2);
 	}	
+	
+	@Test
+	public void test_get_active_patron() {
+		Controller controller = new Controller();
+		Worker worker = controller.loginWorker("W1");
+		Patron patron = controller.startTransaction("P1");
+		controller.setTransactionType("out");
+		
+		assertEquals("active patrons should match", patron, controller.getActivePatron());
+	}
+	
+	@Test
+	public void test_validate_and_set_patron_fail() {
+		Controller controller = new Controller();
+		
+		assertEquals("patron does not exist in DB, should fail", false, controller.validateAndSetPatron("Patron"));
+	}
 }

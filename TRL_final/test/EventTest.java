@@ -34,13 +34,16 @@ public class EventTest {
 		Copy copy = db.getCopy("C1");
 		Patron patron = db.getPatron("P1");
 		Worker worker = db.getWorker("W1");
+		String action = "Check In";
 		
-		Event event = new Event.EventBuilder("Check In")
+		Event event = new Event.EventBuilder(action)
 				.worker(worker)
 				.patron(patron)
 				.copy(copy)
 				.build();		
 			
+		assertEquals("event Action not correct", action, event.getAction());
+		assertEquals("event Worker not correct", worker, event.getWorker());
 		assertEquals("event Patron not correct", patron, event.getPatron());
 		assertEquals("event Copy not correct", copy, event.getCopy());
 	}
