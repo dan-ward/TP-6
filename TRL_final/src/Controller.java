@@ -22,24 +22,26 @@ public class Controller {
 	}
 	
 	public Boolean setTransactionType(String transactionType) {
+		Boolean returnValue;
+		String action = "Transaction Type of " + transactionType;
+
 		if(transactionType.equalsIgnoreCase("out") || transactionType.equalsIgnoreCase("in")) {
 			this.transactionType = transactionType;
-			String action = "Transaction Type of " + this.transactionType + " successfully set";
-			Event setTransactionType = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.patron(this.activePatron)
-					.build();
-			log.logEvent(setTransactionType);
-			return true;
+			action = action + " successfully set";
+			returnValue = true;
 		} else {
-			String action = "Transaction Type of " + this.transactionType + " failed to set";
-			Event setTransactionType = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.patron(this.activePatron)
-					.build();
-			log.logEvent(setTransactionType);
-			return false;
+			action = action + " failed to set";
+			returnValue = false;
 		}
+
+		Event setTransactionType = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.build();
+		log.logEvent(setTransactionType);
+
+		return returnValue;
+		
 	}
 	
 	public String getTransactionType() {
@@ -64,24 +66,26 @@ public class Controller {
 
 	
 	public boolean validateAndSetPatron(String patronID) {
+		Boolean returnValue;
+		String action;
+		
 		if (this.db.validatePatronID(patronID)) {
 			this.setActivePatron(startTransaction(patronID));
-			String action = "Validated and Set Patron: " + patronID;
-			Event validatePatron = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.patron(this.activePatron)
-					.build();
-			log.logEvent(validatePatron);
-			return true;
+			action = "Validated and Set Patron: " + patronID;
+			returnValue = true;
 		} else {
-			String action = "Failed to Validated and Set Patron: " + patronID;
-			Event validatePatron = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.patron(this.activePatron)
-					.build();
-			log.logEvent(validatePatron);
-			return false;
+			action = "Failed to Validated and Set Patron: " + patronID;
+			returnValue = false;
 		}
+
+		Event validatePatron = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.build();
+		log.logEvent(validatePatron);
+
+		return returnValue;
+	
 	}
 
 	public Copy checkOutCopy(String copyId) {
@@ -91,26 +95,26 @@ public class Controller {
 	}
 
 	public boolean validateAndCheckOutCopy(String copyID) {
+		Boolean returnValue;
+		String action;
+				
 		if (this.db.validateCopyID(copyID)) {
 			this.activeCopy = this.checkOutCopy(copyID);
-			String action = "Copy Validated and Successfully Set, Copy ID: " + copyID; 
-			Event checkOutCopy = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.patron(this.activePatron)
-					.copy(this.activeCopy)
-					.build();
-			log.logEvent(checkOutCopy);
-			return true; 
+			action = "Copy Validated and Successfully Set, Copy ID: " + copyID; 
+			returnValue = true; 
 		} else {
-			String action = "Copy Failed to Validate, Copy ID: " + copyID;
-			Event checkOutCopy = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.patron(this.activePatron)
-					.copy(this.activeCopy)
-					.build();
-			log.logEvent(checkOutCopy);	
-			return false;
+			action = "Copy Failed to Validate, Copy ID: " + copyID;
+			returnValue = false;
 		}
+
+		Event checkOutCopy = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.copy(this.activeCopy)
+				.build();
+		log.logEvent(checkOutCopy);
+		
+		return returnValue;
 	}
 	
 	public Event getLastEvent() {
@@ -118,24 +122,27 @@ public class Controller {
 	}
 	
 	public boolean validateAndLoginWorker(String workerID) {
+
+		Boolean returnValue;
+		String action;
+
 		if (this.db.validateWorkerID(workerID)) {
 			this.activeWorker = this.loginWorker(workerID);
 			
-			String action = "Worker Login Successful for WorkerID: " + workerID;
-			Event workerLogin = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.build();
-			log.logEvent(workerLogin);
-			return true;
+			action = "Worker Login Successful for WorkerID: " + workerID;
+			returnValue = true;
 			
 		} else {
-			String action = "Worker Login Unsuccessful for WorkerID: " + workerID;
-			Event workerLogin = new Event.EventBuilder(action)
-					.worker(this.activeWorker)
-					.build();
-			log.logEvent(workerLogin);
-			return false;
+			action = "Worker Login Unsuccessful for WorkerID: " + workerID;
+			returnValue = false;
 		}
+
+		Event workerLogin = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.build();
+		log.logEvent(workerLogin);
+
+		return returnValue;
 	}
 	
 	public Worker loginWorker(String workerId) {
