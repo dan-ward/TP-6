@@ -82,7 +82,7 @@ public class FakeDBTest {
 	@Test
 	public void test_validate_invalid_copy() {
 		FakeDB db = new FakeDB();
-		Copy copy = db.getCopy("C9");
+		Copy copy = db.getCopy("P9");
 		assertNull("copy is not null", copy);
 	}
 }

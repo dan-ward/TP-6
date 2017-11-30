@@ -69,7 +69,7 @@ public class ControllerTest {
 		
 		Patron patron = controller.startTransaction(patronId);
 		
-		assertEquals("patron name not as expected", "Test Patron", patron.getName());
+		assertEquals("patron name not as expected", "Test Patron One", patron.getName());
 	}
 	
 	@Test
@@ -173,7 +173,7 @@ public class ControllerTest {
 		
 		Worker worker = controller.getWorkerObject(workerId);
 		
-		assertEquals("worker name not as expected", "Test Worker", worker.getName());
+		assertEquals("worker name not as expected", "Test Worker One", worker.getName());
 	}
 	
 	@Test
@@ -202,7 +202,7 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		Patron patron = controller.startTransaction("P1");
 		
-		assertEquals("Patron string doesn't match", controller.getActivePatronString(), "Patron ID: P1 Patron Name: Test Patron");
+		assertEquals("Patron string doesn't match", controller.getActivePatronString(), "Patron ID: P1 Patron Name: Test Patron One");
 	}
 	
 	@Test
@@ -250,7 +250,7 @@ public class ControllerTest {
 	public void test_validate_and_checkout_copy_fail() {
 		Controller controller = new Controller();
 		
-		assertEquals("copy is valid", false, controller.validateCopy("C9"));
+		assertEquals("copy is valid", false, controller.validateCopy("W9"));
 	}	
 	
 	@Test
