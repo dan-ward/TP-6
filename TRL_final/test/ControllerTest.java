@@ -13,6 +13,55 @@ public class ControllerTest {
 	public void setUp() throws Exception {	
 	}
 
+
+	@Test
+	public void test_login_worker() {
+		Controller controller = new Controller();
+		controller.loginWorker("W1");
+		
+		assertEquals("Worker doesn't match", "W1" , controller.activeWorker.getId());
+		
+	}
+	
+	@Test
+	public void test_initializePatronTransaction_valid_patron() {
+		Controller controller = new Controller();
+		controller.initializePatronTransaction("P1");
+		
+		assertEquals("Patrons don't match", "P1", controller.activePatron.getId());
+	}
+	
+
+	@Test
+	public void test_checkoutCopy_valid() {
+		Controller controller = new Controller();
+		controller.processCheckoutCopy("C1");
+		
+		assertEquals("Copy doesn't match", "C1", controller.activeCopy.getId());
+	}
+	
+	@Test
+	public void test_set_patron_valid() {
+		Controller controller = new Controller();
+		Patron validPatron = controller.startTransaction("P2");
+		
+		controller.setActivePatron(validPatron);
+		
+		assertEquals("Patrons don't match", validPatron, controller.getActivePatron());
+		
+	}
+
+	@Test
+	public void test_set_patron_invalid() {
+		Controller controller = new Controller();
+		Patron validPatron = controller.startTransaction("W2");
+		
+		controller.setActivePatron(validPatron);
+		
+		assertEquals("Patrons don't match", validPatron, controller.getActivePatron());
+		
+	}
+	
 	@Test
 	public void test_start_transaction() {
 		String patronId = "P1";
@@ -73,7 +122,7 @@ public class ControllerTest {
 	@Test
 	public void test_log_event() {
 		Controller controller = new Controller();
-		Worker worker = controller.loginWorker("W1");
+		Worker worker = controller.getWorkerObject("W1");
 		Patron patron = controller.startTransaction("P1");
 		controller.setTransactionType("out");	
 		Copy copy = controller.checkOutCopy("C1");
@@ -97,52 +146,52 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void test_validate_and_set_patron() {
+	public void test_validate_patron() {
 		String patronId = "P1";
 		Controller controller = new Controller();
 		
-		boolean isPatron = controller.validateAndSetPatron(patronId);
+		boolean isPatron = controller.validatePatron(patronId);
 		
 		assertEquals("patron is not valid", true, isPatron);
 	}
 	
 	@Test
 	public void test_validate_and_set_patron_fake_patronID() {
-		String patronId = "P9";
+		String patronId = "W9";
 		Controller controller = new Controller();
 		
-		boolean isPatron = controller.validateAndLoginWorker(patronId);
+		boolean isPatron = controller.validatePatron(patronId);
 		
 		assertEquals("patron is valid", false, isPatron);
 	}
 	
 	
 	@Test
-	public void test_login_worker() {
+	public void test_get_worker_object() {
 		String workerId = "W1";
 		Controller controller = new Controller();
 		
-		Worker worker = controller.loginWorker(workerId);
+		Worker worker = controller.getWorkerObject(workerId);
 		
 		assertEquals("worker name not as expected", "Test Worker", worker.getName());
 	}
 	
 	@Test
-	public void test_validate_and_login_worker() {
+	public void test_validate_worker() {
 		String workerId = "W1";
 		Controller controller = new Controller();
 		
-		boolean isWorker = controller.validateAndLoginWorker(workerId);
-		
+		boolean isWorker = controller.validateWorker(workerId);
+				
 		assertEquals("worker is not valid", true, isWorker);
 	}
 	
 	@Test
 	public void test_validate_and_login_worker_fake_workerID() {
-		String workerId = "W9";
+		String workerId = "P9";
 		Controller controller = new Controller();
 		
-		boolean isWorker = controller.validateAndLoginWorker(workerId);
+		boolean isWorker = controller.validateWorker(workerId);
 		
 		assertEquals("worker is valid", false, isWorker);
 	}
@@ -177,7 +226,7 @@ public class ControllerTest {
 	@Test
 	public void test_add_copy_to_check_out_queue() {
 		Controller controller = new Controller();
-		Worker worker = controller.loginWorker("W2");
+		Worker worker = controller.getWorkerObject("W2");
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
 		Copy copy = controller.checkOutCopy("C2");
@@ -191,23 +240,23 @@ public class ControllerTest {
 	}
 
 	@Test
-	public void test_validate_and_checkout_copy() {
+	public void test_validate_copy() {
 		Controller controller = new Controller();
 		
-		assertEquals("copy is not valid", true, controller.validateAndCheckOutCopy("C1"));
+		assertEquals("copy is not valid", true, controller.validateCopy("C1"));
 	}
 	
 	@Test
 	public void test_validate_and_checkout_copy_fail() {
 		Controller controller = new Controller();
 		
-		assertEquals("copy is valid", false, controller.validateAndCheckOutCopy("C9"));
+		assertEquals("copy is valid", false, controller.validateCopy("C9"));
 	}	
 	
 	@Test
 	public void test_complete_session() {
 		Controller controller = new Controller();
-		Worker worker = controller.loginWorker("W2");
+		Worker worker = controller.getWorkerObject("W2");
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
 		Queue<Copy> checkOutQueue = new LinkedList<Copy>();
@@ -242,7 +291,7 @@ public class ControllerTest {
 		Log log = new Log();
 		
 		Controller controller = new Controller();
-		Worker worker = controller.loginWorker("W2");
+		Worker worker = controller.getWorkerObject("W2");
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
 		Queue<Copy> checkOutQueue = new LinkedList<Copy>();
@@ -279,7 +328,7 @@ public class ControllerTest {
 	@Test
 	public void test_get_active_patron() {
 		Controller controller = new Controller();
-		Worker worker = controller.loginWorker("W1");
+		Worker worker = controller.getWorkerObject("W1");
 		Patron patron = controller.startTransaction("P1");
 		controller.setTransactionType("out");
 		
@@ -290,6 +339,6 @@ public class ControllerTest {
 	public void test_validate_and_set_patron_fail() {
 		Controller controller = new Controller();
 		
-		assertEquals("patron does not exist in DB, should fail", false, controller.validateAndSetPatron("Patron"));
+		assertEquals("patron does not exist in DB, should fail", false, controller.validatePatron("Patron"));
 	}
 }

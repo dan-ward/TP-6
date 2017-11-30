@@ -7,40 +7,49 @@ public class TRLApp {
 	private static void welcomeMessage() {
 		StdOut.println("Welcome to the TRL");
 	}
-	
-	private static void promptForWorkerIDAndLogin() {
+	private static String getWorkerId() {
 		String workerID;
 
 		StdOut.print("Please enter your WorkerID (e.g., W1 or W2): ");
 		workerID = StdIn.readString();
-
-		while (!TRLController.validateAndLoginWorker(workerID)) {
+		
+		while (!TRLController.validateWorker(workerID)) {
 			StdOut.println("The worker ID of: " + workerID + " is not valid.");
 			StdOut.print("Please enter your WorkerID: ");
-			workerID = StdIn.readString();
+			workerID = StdIn.readString();			
 		}
-
-		StdOut.println(workerID + " was successfully logged in.");
+		
+		return workerID;
+		
 	}
-
-	private static void promptForPatronIDandSetPatron() {
+		
+	private static void loginWorker(String workerID) {
+		TRLController.loginWorker(workerID);
+	}
+	
+	private static String getPatronID() {
 		String patronID;
-
 		StdOut.print("Please enter the PatronID (e.g., P1 or P2): ");
 		patronID = StdIn.readString();
 
-		while (!TRLController.validateAndSetPatron(patronID)) {
+		while (!TRLController.validatePatron(patronID)) {
 			StdOut.println("The patron ID of: " + patronID + " is not valid.");
 			StdOut.print("Please enter the PatronID: ");
 			patronID = StdIn.readString();
 		}
+		
+		return patronID;
 	}
-
+	
+	private static void initializePatronTransaction(String patronID) {
+		TRLController.initializePatronTransaction(patronID);
+	}
+	
 	private static void printPatronInformation() {
 		StdOut.println(TRLController.getActivePatronString());
 	}
 	
-	private static String promptForAndSetTransactionType() {
+	private static String setTransactionType() {
 		
 		String transactionType;
 
@@ -63,17 +72,20 @@ public class TRLApp {
 		StdOut.print("Please enter the copy ID (e.g., C1 or C2): ");
 		copyID = StdIn.readString();
 
-		while (!TRLController.validateAndCheckOutCopy(copyID)) {
+		while (!TRLController.validateCopy(copyID)) {
 			StdOut.println("The copy ID of: " + copyID + " is not valid.");
 			StdOut.print("Please enter a valid copy ID: ");
 			copyID = StdIn.readString();
 		}
+		
+		TRLController.checkOutCopy(copyID);
 
 		StdOut.println(TRLController.getActiveCopyString());
 		
 		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");	
 	}
 
+	
 	private static void checkoutCopies() {
 		String checkOutAnother = "y";
 		while (checkOutAnother.equalsIgnoreCase("y")) {
@@ -97,16 +109,16 @@ public class TRLApp {
 	
 	public static void main(String[] args) {
 		String transactionType;
-		
+				
 		welcomeMessage();
 		
-		promptForWorkerIDAndLogin();
+		loginWorker(getWorkerId());
 
-		promptForPatronIDandSetPatron();
-
+		initializePatronTransaction(getPatronID());
+		
 		printPatronInformation();
 		
-		transactionType = promptForAndSetTransactionType();
+		transactionType = setTransactionType();
 		
 		if (transactionType.equals("out")) {
 			checkoutCopies();

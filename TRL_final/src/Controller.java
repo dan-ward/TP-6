@@ -65,17 +65,16 @@ public class Controller {
 	}  
 
 	
-	public boolean validateAndSetPatron(String patronID) {
-		Boolean returnValue;
+	public boolean validatePatron(String patronID) {
+		Boolean isValidPatron;
 		String action;
 		
 		if (this.db.validatePatronID(patronID)) {
-			this.setActivePatron(startTransaction(patronID));
-			action = "Validated and Set Patron: " + patronID;
-			returnValue = true;
+			action = "Validated Patron: " + patronID;
+			isValidPatron = true;
 		} else {
-			action = "Failed to Validated and Set Patron: " + patronID;
-			returnValue = false;
+			action = "Failed to Validated Patron: " + patronID;
+			isValidPatron = false;
 		}
 
 		Event validatePatron = new Event.EventBuilder(action)
@@ -84,9 +83,24 @@ public class Controller {
 				.build();
 		log.logEvent(validatePatron);
 
-		return returnValue;
-	
+		return isValidPatron;
+		
 	}
+	
+	public void initializePatronTransaction(String patronID) {
+		String action;
+		
+		this.setActivePatron(startTransaction(patronID));
+		action = "Initialize Transaction for Patron: " + patronID;
+
+		Event validatePatron = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.build();
+		log.logEvent(validatePatron);
+		
+	}
+	
 
 	public Copy checkOutCopy(String copyId) {
 		this.activeCopy = this.db.getCopy(copyId);
@@ -94,18 +108,34 @@ public class Controller {
 		return this.activeCopy;
 	}
 
-	public boolean validateAndCheckOutCopy(String copyID) {
-		Boolean returnValue;
+	public boolean validateCopy(String copyID) {
+		Boolean isValidCopy;
 		String action;
 				
 		if (this.db.validateCopyID(copyID)) {
-			this.activeCopy = this.checkOutCopy(copyID);
-			action = "Copy Validated and Successfully Set, Copy ID: " + copyID; 
-			returnValue = true; 
+			action = "Copy Validated, Copy ID: " + copyID; 
+			isValidCopy = true; 
 		} else {
 			action = "Copy Failed to Validate, Copy ID: " + copyID;
-			returnValue = false;
+			isValidCopy = false;
 		}
+
+		Event validateCopy = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.copy(this.activeCopy)
+				.build();
+		log.logEvent(validateCopy);
+		
+		return isValidCopy;
+		
+	}
+	
+	public void processCheckoutCopy(String copyID) {
+		String action;
+		
+		this.activeCopy = this.checkOutCopy(copyID);
+		action = "Copy Successfully Checked Out, Copy ID: " + copyID; 
 
 		Event checkOutCopy = new Event.EventBuilder(action)
 				.worker(this.activeWorker)
@@ -114,27 +144,24 @@ public class Controller {
 				.build();
 		log.logEvent(checkOutCopy);
 		
-		return returnValue;
 	}
+	
 	
 	public Event getLastEvent() {
 		return log.getEvent(lastEventKey);
 	}
 	
-	public boolean validateAndLoginWorker(String workerID) {
-
-		Boolean returnValue;
+	public boolean validateWorker(String workerID) {
+		Boolean isValidWorker;
 		String action;
 
-		if (this.db.validateWorkerID(workerID)) {
-			this.activeWorker = this.loginWorker(workerID);
-			
-			action = "Worker Login Successful for WorkerID: " + workerID;
-			returnValue = true;
+		if (this.db.validateWorkerID(workerID)) {			
+			action = "Worker Validation Successful for WorkerID: " + workerID;
+			isValidWorker = true;
 			
 		} else {
-			action = "Worker Login Unsuccessful for WorkerID: " + workerID;
-			returnValue = false;
+			action = "Worker Validation Unsuccessful for WorkerID: " + workerID;
+			isValidWorker = false;
 		}
 
 		Event workerLogin = new Event.EventBuilder(action)
@@ -142,10 +169,26 @@ public class Controller {
 				.build();
 		log.logEvent(workerLogin);
 
-		return returnValue;
+		return isValidWorker;
+		
 	}
 	
-	public Worker loginWorker(String workerId) {
+	public void loginWorker(String workerID) {
+		String action;
+		
+		this.activeWorker = this.getWorkerObject(workerID);
+			
+		action = "Worker Login Successful for WorkerID: " + workerID;
+
+		Event workerLogin = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.build();
+		log.logEvent(workerLogin);
+
+	}
+	
+		
+	public Worker getWorkerObject(String workerId) {
 		this.activeWorker = this.db.getWorker(workerId);
 		return this.activeWorker;
 	}
