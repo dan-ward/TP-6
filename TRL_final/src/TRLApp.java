@@ -29,7 +29,7 @@ public class TRLApp {
 	
 	private static String getPatronID() {
 		String patronID;
-		StdOut.print("Please enter the PatronID (e.g., P1 or P2): ");
+		StdOut.print("Please enter the PatronID (e.g., P1, P2, ... P5): ");
 		patronID = StdIn.readString();
 
 		while (!TRLController.validatePatron(patronID)) {
@@ -46,7 +46,7 @@ public class TRLApp {
 	}
 	
 	private static void printPatronInformation() {
-		StdOut.println(TRLController.getActivePatronString());
+		StdOut.printf(TRLController.getActivePatronString());
 	}
 	
 	private static String setTransactionType() {
@@ -65,11 +65,11 @@ public class TRLApp {
 		return transactionType;	
 	}
 
-	private static void checkoutCopy() {
+	private static void addCopyToCheckoutList() {
 		
 		String copyID;
 		
-		StdOut.print("Please enter the copy ID (e.g., C1 or C2): ");
+		StdOut.print("Please enter the copy ID (e.g., C1, C2, ...., C14): ");
 		copyID = StdIn.readString();
 
 		while (!TRLController.validateCopy(copyID)) {
@@ -77,28 +77,24 @@ public class TRLApp {
 			StdOut.print("Please enter a valid copy ID: ");
 			copyID = StdIn.readString();
 		}
-		
-		TRLController.checkOutCopy(copyID);
 
-		StdOut.println(TRLController.getActiveCopyString());
+		TRLController.addCopyToCheckoutList(copyID);
 		
-		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");	
+		StdOut.println(TRLController.getActiveCopyString());
+
+		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");
+
 	}
 
 	
 	private static void checkoutCopies() {
 		String checkOutAnother = "y";
 		while (checkOutAnother.equalsIgnoreCase("y")) {
-			checkoutCopy();
+			addCopyToCheckoutList();
 			StdOut.print("Would you like to checkout another y/n? ");
 			checkOutAnother = StdIn.readString();
 		}
-		
-		while (TRLController.checkOutQueue.size() > 0) {
-			Copy c = TRLController.checkOutQueue.poll();
-			StdOut.println("Copy ID: " + c.getId() + " Title: " + c.getTitle() + " is being checked out.");
-		}
-		
+				
 		try {
 			TRLController.completeSession();
 			StdOut.println("All of your copies have been checked out.  Thank you!");
@@ -125,5 +121,8 @@ public class TRLApp {
 		} else {
 			StdOut.println("Sorry you entered an invalid transaction type");
 		}
+		
+		printPatronInformation();
+		
 	}
 }

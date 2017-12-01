@@ -100,7 +100,7 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
-		Copy copy = controller.checkOutCopy("C1");
+		Copy copy = controller.addCopyToCheckoutList("C1");
 		
 		try {
 			controller.completeSession();
@@ -125,7 +125,7 @@ public class ControllerTest {
 		Worker worker = controller.getWorkerObject("W1");
 		Patron patron = controller.startTransaction("P1");
 		controller.setTransactionType("out");	
-		Copy copy = controller.checkOutCopy("C1");
+		Copy copy = controller.addCopyToCheckoutList("C1");
 		
 		try {
 			controller.completeSession();
@@ -202,7 +202,9 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		Patron patron = controller.startTransaction("P1");
 		
-		assertEquals("Patron string doesn't match", controller.getActivePatronString(), "Patron ID: P1 Patron Name: Test Patron One");
+		assertEquals("Patron string doesn't match", controller.getActivePatronString(), 
+				"%nPatron ID: P1%nPatron Name: Test Patron One%n0 copies checked out:" +
+				"%n%n0 holds:%n");
 	}
 	
 	@Test
@@ -229,7 +231,7 @@ public class ControllerTest {
 		Worker worker = controller.getWorkerObject("W2");
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
-		Copy copy = controller.checkOutCopy("C2");
+		Copy copy = controller.addCopyToCheckoutList("C2");
 		
 		Queue<Copy> checkOutQueue = new LinkedList<Copy>();
 		checkOutQueue.add(copy);
@@ -260,9 +262,9 @@ public class ControllerTest {
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
 		Queue<Copy> checkOutQueue = new LinkedList<Copy>();
-		Copy copy1 = controller.checkOutCopy("C1");
+		Copy copy1 = controller.addCopyToCheckoutList("C1");
 		checkOutQueue.add(copy1);
-		Copy copy2 = controller.checkOutCopy("C2");
+		Copy copy2 = controller.addCopyToCheckoutList("C2");
 		checkOutQueue.add(copy2);
 		
 		assertEquals("check out queue should have 2 copies", 2, controller.getCheckOutQueue().size());
@@ -295,7 +297,7 @@ public class ControllerTest {
 		Patron patron = controller.startTransaction("P2");
 		controller.setTransactionType("out");
 		Queue<Copy> checkOutQueue = new LinkedList<Copy>();
-		Copy copy1 = controller.checkOutCopy("C1");
+		Copy copy1 = controller.addCopyToCheckoutList("C1");
 		String action = "Check Out";
 		log.logEvent(new Event.EventBuilder(action)
 				.worker(worker)
@@ -304,7 +306,7 @@ public class ControllerTest {
 				.build());
 		
 		checkOutQueue.add(copy1);
-		Copy copy2 = controller.checkOutCopy("C2");
+		Copy copy2 = controller.addCopyToCheckoutList("C2");
 		log.logEvent(new Event.EventBuilder(action)
 				.worker(worker)
 				.patron(patron)

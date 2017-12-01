@@ -126,4 +126,35 @@ public class PatronTest {
 		assertEquals("exception message should match", "HoldException: 1 hold!", holdMessages);
 		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
 	}	
+
+	@Test
+	public void test_get_hold_string() {
+		Textbook textbook = new Textbook("Test hold title");
+		Controller controller = new Controller();
+		Copy copy1 = new Copy("C1", textbook);
+		Hold hold = new Hold(copy1, "Overdue book");
+		Patron patron = new Patron("P3", "Test hold patron");
+		
+		String holdMessages = "";
+		
+		try {
+			copy1.checkOut();
+			controller.processCheckoutCopy(copy1.getId());
+			controller.activePatron = patron;
+			controller.completeSession();
+		} catch (HoldException e) {
+			holdMessages += e.toString();
+			StdOut.println(e.toString());
+		}
+		patron.addHold(hold);
+		
+		assertEquals("Patron hold string doesn't match", patron.getHoldString().substring(0, 40), 
+				"CopyID: C1  Title: Test hold title  Due:");
+		
+		
+		assertEquals("Patron hold string doesn't match", patron.getHoldString().endsWith("Message: Overdue book%n"), 
+				true);
+				
+	}
+
 }

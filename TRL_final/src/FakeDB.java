@@ -35,18 +35,18 @@ public class FakeDB {
 		copyStore = new HashMap<String, Copy>();
 		copyStore.put("C1", new Copy("C1", textbookStore.get("T1")));
 		copyStore.put("C2", new Copy("C2", textbookStore.get("T1")));
-		copyStore.put("C3", new Copy("C2", textbookStore.get("T2")));
-		copyStore.put("C4", new Copy("C2", textbookStore.get("T2")));
-		copyStore.put("C5", new Copy("C2", textbookStore.get("T3")));
-		copyStore.put("C6", new Copy("C2", textbookStore.get("T3")));
-		copyStore.put("C7", new Copy("C2", textbookStore.get("T4")));
-		copyStore.put("C8", new Copy("C2", textbookStore.get("T4")));
-		copyStore.put("C9", new Copy("C2", textbookStore.get("T5")));
-		copyStore.put("C10", new Copy("C2", textbookStore.get("T5")));
-		copyStore.put("C11", new Copy("C2", textbookStore.get("T6")));
-		copyStore.put("C12", new Copy("C2", textbookStore.get("T6")));
-		copyStore.put("C13", new Copy("C2", textbookStore.get("T7")));
-		copyStore.put("C14", new Copy("C2", textbookStore.get("T7")));
+		copyStore.put("C3", new Copy("C3", textbookStore.get("T2")));
+		copyStore.put("C4", new Copy("C4", textbookStore.get("T2")));
+		copyStore.put("C5", new Copy("C5", textbookStore.get("T3")));
+		copyStore.put("C6", new Copy("C6", textbookStore.get("T3")));
+		copyStore.put("C7", new Copy("C7", textbookStore.get("T4")));
+		copyStore.put("C8", new Copy("C8", textbookStore.get("T4")));
+		copyStore.put("C9", new Copy("C9", textbookStore.get("T5")));
+		copyStore.put("C10", new Copy("C10", textbookStore.get("T5")));
+		copyStore.put("C11", new Copy("C11", textbookStore.get("T6")));
+		copyStore.put("C12", new Copy("C12", textbookStore.get("T6")));
+		copyStore.put("C13", new Copy("C13", textbookStore.get("T7")));
+		copyStore.put("C14", new Copy("C14", textbookStore.get("T7")));
 	}
 	
 	public Textbook getTextbook(String key) {

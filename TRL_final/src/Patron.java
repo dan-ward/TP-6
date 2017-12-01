@@ -53,6 +53,31 @@ public class Patron {
 		return checkedOutCopies.size();
 	}
 	
+	public String getCheckedOutString() {
+		String checkedOutList = "";
+		
+		for (int i =0; i < this.checkedOutCopies.size(); i++) {
+			checkedOutList += "CopyID: " + this.checkedOutCopies.get(i).getId() + "  Title: " +
+					this.checkedOutCopies.get(i).getTitle() + "  Due: " +
+					this.checkedOutCopies.get(i).getDueDate() + "%n";
+			
+		}
+		
+		return checkedOutList;
+	}
+
+	public String getHoldString() {
+		String holdList = "";
+		
+		for (int i =0; i < this.holds.size(); i++) {
+			holdList += "CopyID: " + this.holds.get(i).getCopy().getId() + "  Title: " +
+					this.holds.get(i).getCopy().getTitle() + "  Due: " +
+					this.holds.get(i).getCopy().getDueDate() + " Message: " + this.holds.get(i).getMessage() + "%n";
+			
+		}
+		
+		return holdList;
+	}
 	public void addHold(Hold hold) {
 		holds.add(hold);
 	}

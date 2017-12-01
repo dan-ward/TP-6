@@ -59,4 +59,5 @@ public class Copy {
 	public String getTitle() {
 		return textbook.getTitle();
 	}
+	
 }

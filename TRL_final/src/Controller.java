@@ -57,10 +57,20 @@ public class Controller {
 	}
 
 	public String getActivePatronString() {
-		return "Patron ID: " + this.activePatron.getId() + " Patron Name: " + this.activePatron.getName();
+		String activePatronInformation;
+		
+		activePatronInformation = "%nPatron ID: " + this.activePatron.getId() + "%nPatron Name: " + 
+				this.activePatron.getName() +
+				"%n" + this.activePatron.getCheckedOutCopyCount() + " copies checked out:%n" +
+				this.activePatron.getCheckedOutString() + "%n" + this.activePatron.getHolds().size() + 
+				" holds:%n" + this.activePatron.getHoldString();
+		
+		return activePatronInformation;
+		
 	}  
 
 	public String getActiveCopyString() {
+				
 		return "Copy ID: " + this.activeCopy.getId() + " Title Name: " + this.activeCopy.getTitle();
 	}  
 
@@ -102,7 +112,7 @@ public class Controller {
 	}
 	
 
-	public Copy checkOutCopy(String copyId) {
+	public Copy addCopyToCheckoutList(String copyId) {
 		this.activeCopy = this.db.getCopy(copyId);
 		checkOutQueue.add(this.activeCopy);
 		return this.activeCopy;
@@ -134,7 +144,7 @@ public class Controller {
 	public void processCheckoutCopy(String copyID) {
 		String action;
 		
-		this.activeCopy = this.checkOutCopy(copyID);
+		this.activeCopy = this.addCopyToCheckoutList(copyID);
 		action = "Copy Successfully Checked Out, Copy ID: " + copyID; 
 
 		Event checkOutCopy = new Event.EventBuilder(action)
