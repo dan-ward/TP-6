@@ -11,6 +11,7 @@ public class Controller {
 	String transactionType;
 	Copy activeCopy;
 	Queue<Copy> checkOutQueue = new LinkedList<Copy>();
+	Queue<Copy> checkInQueue = new LinkedList<Copy>();
 	
 	public Controller() {
 		this.db = new FakeDB();
@@ -117,6 +118,12 @@ public class Controller {
 		checkOutQueue.add(this.activeCopy);
 		return this.activeCopy;
 	}
+	
+	public Copy addCopyToCheckInList(String copyId) {
+		this.activeCopy = this.db.getCopy(copyId);
+		checkInQueue.add(this.activeCopy);
+		return this.activeCopy;
+	}
 
 	public boolean validateCopy(String copyID) {
 		Boolean isValidCopy;
@@ -207,7 +214,19 @@ public class Controller {
 		return this.checkOutQueue;
 	}
 	
+	public Queue<Copy> getCheckInQueue() {
+		return this.checkInQueue;
+	}
+	
 	public void completeSession() throws HoldException {
+		if (this.transactionType == "out") {
+			this.completeCheckOutSession();
+		} if (this.transactionType == "in") {
+			this.completeCheckInSession();
+		}
+	}
+	
+	public void completeCheckOutSession() throws HoldException {
 		while (checkOutQueue.size() > 0) {
 			Copy c = checkOutQueue.poll();
 			c.checkOut();
@@ -221,6 +240,23 @@ public class Controller {
 					.build();
 			lastEventKey = this.log.logEvent(completeSession);
 			checkOutQueue.remove(this.activeCopy);
+		}
+	}
+	
+	public void completeCheckInSession() throws HoldException {
+		while (checkInQueue.size() > 0) {
+			Copy c = checkInQueue.poll();
+			c.checkIn();
+			this.activeCopy = c;
+			this.activePatron.checkInCopy(this.activeCopy);
+			String action = "Complete Session - Check In";
+			Event completeSession = new Event.EventBuilder(action)
+					.worker(this.activeWorker)
+					.patron(this.activePatron)
+					.copy(this.activeCopy)
+					.build();
+			lastEventKey = this.log.logEvent(completeSession);
+			checkInQueue.remove(this.activeCopy);
 		}
 	}
 	

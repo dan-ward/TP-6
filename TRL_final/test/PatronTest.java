@@ -50,7 +50,7 @@ public class PatronTest {
 		try {
 			patron.checkOutCopy(copy);
 		} catch (HoldException e) {
-			e.printStackTrace();
+			// do nothing
 		}
 		
 		assertEquals("copy not checked out, in correctly", true, patron.checkInCopy(copy));
@@ -66,12 +66,12 @@ public class PatronTest {
 		try {
 			patron.checkOutCopy(copy1);
 		} catch (HoldException e1) {
-			e1.printStackTrace();
+			// do nothing
 		}
 		try {
 			patron.checkOutCopy(copy1);
 		} catch (HoldException e) {
-			e.printStackTrace();
+			// do nothing
 		}
 		
 		assertEquals("patron should have 2 copies checked out", 2, patron.getCheckedOutCopyCount());
@@ -113,14 +113,12 @@ public class PatronTest {
 			patron.checkOutCopy(copy1);
 		} catch (HoldException e) {
 			holdMessages += e.toString();
-			StdOut.println(e.toString());
 		}
 		patron.addHold(hold);
 		try {			
 			patron.checkOutCopy(copy2);
 		} catch (HoldException e) {
 			holdMessages += e.toString();
-			StdOut.println(e.toString());
 		}
 		
 		assertEquals("exception message should match", "HoldException: 1 hold!", holdMessages);
@@ -144,7 +142,6 @@ public class PatronTest {
 			controller.completeSession();
 		} catch (HoldException e) {
 			holdMessages += e.toString();
-			StdOut.println(e.toString());
 		}
 		patron.addHold(hold);
 		

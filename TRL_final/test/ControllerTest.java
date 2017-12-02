@@ -105,8 +105,7 @@ public class ControllerTest {
 		try {
 			controller.completeSession();
 		} catch (HoldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// do nothing
 		}
 		Calendar calendar = Calendar.getInstance();
 		calendar.add(Calendar.DAY_OF_MONTH, 14);
@@ -118,7 +117,7 @@ public class ControllerTest {
 		copy.checkIn();
 		patron.checkInCopy(copy);
 	}
-	
+		
 	@Test
 	public void test_log_event() {
 		Controller controller = new Controller();
@@ -130,8 +129,7 @@ public class ControllerTest {
 		try {
 			controller.completeSession();
 		} catch (HoldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// do nothing
 		}
 		
 		Event event = new Event.EventBuilder("Complete Session - Check Out")
@@ -202,9 +200,8 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		Patron patron = controller.startTransaction("P1");
 		
-		assertEquals("Patron string doesn't match", controller.getActivePatronString(), 
-				"%nPatron ID: P1%nPatron Name: Test Patron One%n0 copies checked out:" +
-				"%n%n0 holds:%n");
+		assertEquals("Patron string doesn't match", "%nPatron ID: P1%nPatron Name: Test Patron One%n0 copies checked out:" +
+				"%n%n0 holds:%n", controller.getActivePatronString());
 	}
 	
 	@Test
@@ -256,7 +253,7 @@ public class ControllerTest {
 	}	
 	
 	@Test
-	public void test_complete_session() {
+	public void test_complete_check_out_session() {
 		Controller controller = new Controller();
 		Worker worker = controller.getWorkerObject("W2");
 		Patron patron = controller.startTransaction("P2");
@@ -273,8 +270,7 @@ public class ControllerTest {
 		try {
 			controller.completeSession();
 		} catch (HoldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// do nothing
 		}
 		
 		assertEquals("copy 1 should be checked out", true, copy1.isCheckedOut());
@@ -316,8 +312,7 @@ public class ControllerTest {
 		try {
 			controller.completeSession();
 		} catch (HoldException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// do nothing
 		}		
 		
 		assertEquals("logs should match", log.toString(), controller.getLog().toString());
@@ -343,4 +338,70 @@ public class ControllerTest {
 		
 		assertEquals("patron does not exist in DB, should fail", false, controller.validatePatron("Patron"));
 	}
+
+	
+	@Test
+	public void test_set_transaction_type_to_in() {
+		Controller controller = new Controller();
+		Patron patron = controller.startTransaction("P1");
+		controller.setTransactionType("in");
+		
+		assertEquals("transaction type should be 'in'", "in", controller.getTransactionType());
+	}
+	
+	@Test
+	public void test_add_copy_to_check_in_queue() {
+		Controller controller = new Controller();
+		Worker worker = controller.getWorkerObject("W1");
+		Patron patron = controller.startTransaction("P1");
+		controller.setTransactionType("in");
+		Copy copy = controller.addCopyToCheckInList("C1");
+		
+		Queue<Copy> checkInQueue = new LinkedList<Copy>();
+		checkInQueue.add(copy);
+		
+		assertEquals("check in queue does not match expected value", checkInQueue, controller.getCheckInQueue());
+//		copy.checkIn();
+//		patron.checkInCopy(copy);
+	}
+
+	@Test
+	public void test_check_in_copy() {
+		Controller controller = new Controller();
+		Worker worker = controller.getWorkerObject("W2");
+		Patron patron = controller.startTransaction("P2");
+		
+		controller.setTransactionType("out");
+		Copy copy = controller.addCopyToCheckoutList("C2");
+		try {
+			controller.completeSession();
+		} catch (HoldException e1) {
+			// do nothing
+		}
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.add(Calendar.DAY_OF_MONTH, 14);
+		
+		assertEquals("check out failure", "Test Title", copy.getTitle());
+		assertEquals("check out should set copy's isCheckedOut", true, copy.isCheckedOut());
+		assertEquals("copy should be due in 14 days", calendar.getTime().toString(), copy.getDueDate().toString());
+		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
+		
+		controller.setTransactionType("in");
+		copy = controller.addCopyToCheckInList("C2");
+		
+		try {
+			controller.completeSession();
+		} catch (HoldException e) {
+			// do nothing
+		}
+		
+		assertEquals("check in failure", "Test Title", copy.getTitle());
+		assertEquals("check in should set copy's isCheckedOut to false", false, copy.isCheckedOut());
+		assertEquals("patron should have 0 copies checked out", 0, patron.getCheckedOutCopyCount());
+		
+//		copy.checkIn();
+//		patron.checkInCopy(copy);
+	}
+	
 }
