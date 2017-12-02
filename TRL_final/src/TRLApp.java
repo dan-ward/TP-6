@@ -107,7 +107,7 @@ public class TRLApp {
 		String checkInAnother = "y";
 		while (checkInAnother.equalsIgnoreCase("y")) {
 			addCopyToCheckInList();
-			StdOut.print("Would you like to check in another y/n? ");
+			StdOut.print("Would you like to check in another? (y/n) ");
 			checkInAnother = StdIn.readString();
 		}
 		try {
@@ -142,11 +142,8 @@ public class TRLApp {
 		while (newSession.equalsIgnoreCase("y")) {
 		
 			loginWorker(getWorkerId());
-	
 			initializePatronTransaction(getPatronID());
-			
 			printPatronInformation();
-			
 			transactionType = setTransactionType();
 			
 			if (transactionType.equals("out")) {
@@ -158,8 +155,7 @@ public class TRLApp {
 			}
 			
 			printPatronInformation();
-			
-			StdOut.print("Would you like to begin another session? ");
+			StdOut.print("Would you like to begin another session? (y/n) ");
 			newSession = StdIn.readString();
 		}
 		StdOut.println("Goodbye!");
