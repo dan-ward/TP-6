@@ -103,26 +103,65 @@ public class TRLApp {
 		}
 	}
 	
+	public static void checkInCopies() {
+		String checkInAnother = "y";
+		while (checkInAnother.equalsIgnoreCase("y")) {
+			addCopyToCheckInList();
+			StdOut.print("Would you like to check in another y/n? ");
+			checkInAnother = StdIn.readString();
+		}
+		try {
+			TRLController.completeSession();
+			StdOut.println("All of your copies have been checked in.  Thank you!");
+		} catch (Exception e) {
+			StdOut.println("Sorry your copies failed to check in, please try again later.");
+		}
+	}
+	
+	private static void addCopyToCheckInList() {
+		String copyID;
+		StdOut.print("Please enter the copy ID (e.g., C1, C2, ...., C14): ");
+		copyID = StdIn.readString();
+		while (!TRLController.validateCopy(copyID)) {
+			StdOut.println("The copy ID of: " + copyID + " is not valid.");
+			StdOut.print("Please enter a valid copy ID: ");
+			copyID = StdIn.readString();
+		}
+		TRLController.addCopyToCheckInList(copyID);
+		StdOut.println(TRLController.getActiveCopyString());
+		StdOut.println("Copy " + copyID + " was successfully added to the check in queue");
+	}
+	
 	public static void main(String[] args) {
 		String transactionType;
 		
 		welcomeMessage();
 		
-		loginWorker(getWorkerId());
-
-		initializePatronTransaction(getPatronID());
+		String newSession = "y";
 		
-		printPatronInformation();
+		while (newSession.equalsIgnoreCase("y")) {
 		
-		transactionType = setTransactionType();
-		
-		if (transactionType.equals("out")) {
-			checkoutCopies();
-		} else {
-			StdOut.println("Sorry you entered an invalid transaction type");
+			loginWorker(getWorkerId());
+	
+			initializePatronTransaction(getPatronID());
+			
+			printPatronInformation();
+			
+			transactionType = setTransactionType();
+			
+			if (transactionType.equals("out")) {
+				checkoutCopies();
+			} else if (transactionType.equals("in")) {
+				checkInCopies();
+			} else {
+				StdOut.println("Sorry you entered an invalid transaction type");
+			}
+			
+			printPatronInformation();
+			
+			StdOut.print("Would you like to begin another session? ");
+			newSession = StdIn.readString();
 		}
-		
-		printPatronInformation();
-		
+		StdOut.println("Goodbye!");
 	}
 }

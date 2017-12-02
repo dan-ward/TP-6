@@ -69,12 +69,15 @@ public class PatronTest {
 			// do nothing
 		}
 		try {
-			patron.checkOutCopy(copy1);
+			patron.checkOutCopy(copy2);
 		} catch (HoldException e) {
 			// do nothing
 		}
-		
 		assertEquals("patron should have 2 copies checked out", 2, patron.getCheckedOutCopyCount());
+		
+		patron.checkInCopy(copy2);
+		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
+		
 	}
 
 	@Test
@@ -129,6 +132,7 @@ public class PatronTest {
 	public void test_get_hold_string() {
 		Textbook textbook = new Textbook("Test hold title");
 		Controller controller = new Controller();
+		controller.setTransactionType("out");
 		Copy copy1 = new Copy("C1", textbook);
 		Hold hold = new Hold(copy1, "Overdue book");
 		Patron patron = new Patron("P3", "Test hold patron");

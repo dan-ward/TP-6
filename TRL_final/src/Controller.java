@@ -59,7 +59,7 @@ public class Controller {
 
 	public String getActivePatronString() {
 		String activePatronInformation;
-		
+				
 		activePatronInformation = "%nPatron ID: " + this.activePatron.getId() + "%nPatron Name: " + 
 				this.activePatron.getName() +
 				"%n" + this.activePatron.getCheckedOutCopyCount() + " copies checked out:%n" +
@@ -219,16 +219,17 @@ public class Controller {
 	}
 	
 	public void completeSession() throws HoldException {
-		if (this.transactionType == "out") {
-			this.completeCheckOutSession();
-		} if (this.transactionType == "in") {
-			this.completeCheckInSession();
+		
+		if (this.transactionType.equalsIgnoreCase("out")) {
+			completeCheckOutSession();
+		} if (this.transactionType.equalsIgnoreCase("in")) {
+			completeCheckInSession();
 		}
 	}
 	
 	public void completeCheckOutSession() throws HoldException {
 		while (checkOutQueue.size() > 0) {
-			Copy c = checkOutQueue.poll();
+			Copy c = checkOutQueue.poll();		
 			c.checkOut();
 			this.activeCopy = c;
 			this.activePatron.checkOutCopy(this.activeCopy);
@@ -243,7 +244,7 @@ public class Controller {
 		}
 	}
 	
-	public void completeCheckInSession() throws HoldException {
+	public void completeCheckInSession() {
 		while (checkInQueue.size() > 0) {
 			Copy c = checkInQueue.poll();
 			c.checkIn();
