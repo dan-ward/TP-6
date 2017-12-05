@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +29,10 @@ public class FakeDB {
 		patronStore = new HashMap<String, Patron>();
 		patronStore.put("P1", new Patron("P1", "Test Patron One"));
 		patronStore.put("P2", new Patron("P2", "Test Patron Two"));
-		patronStore.put("P3", new Patron("P2", "Test Patron Three"));
-		patronStore.put("P4", new Patron("P2", "Test Patron Four"));
-		patronStore.put("P5", new Patron("P2", "Test Patron Five"));
+		patronStore.put("P3", new Patron("P3", "Test Patron Three"));
+		patronStore.put("P4", new Patron("P4", "Test Patron Four"));
+		patronStore.put("P5", new Patron("P5", "Test Patron Five"));
+		patronStore.put("P6", new Patron("P6", "Test Patron Six"));
 		
 		copyStore = new HashMap<String, Copy>();
 		copyStore.put("C1", new Copy("C1", textbookStore.get("T1")));
@@ -47,7 +49,30 @@ public class FakeDB {
 		copyStore.put("C12", new Copy("C12", textbookStore.get("T6")));
 		copyStore.put("C13", new Copy("C13", textbookStore.get("T7")));
 		copyStore.put("C14", new Copy("C14", textbookStore.get("T7")));
+		copyStore.put("C15", new Copy("C15", textbookStore.get("T1")));
+		copyStore.put("C16", new Copy("C16", textbookStore.get("T2")));
 	}
+
+	public FakeDB() {
+		try {
+			
+			
+			Calendar tempDueDate = Calendar.getInstance();
+			tempDueDate.add(Calendar.MONTH, -1);
+			if (!copyStore.get("C15").isCheckedOut()) {
+				copyStore.get("C15").setDueDate(tempDueDate);
+				copyStore.get("C15").setCheckedOut(true);
+				copyStore.get("C16").setDueDate(tempDueDate);
+				copyStore.get("C16").setCheckedOut(true);
+				
+				patronStore.get("P6").checkOutCopy(copyStore.get("C15"));
+				patronStore.get("P6").checkOutCopy(copyStore.get("C16"));
+			}
+		} catch (HoldException e) {
+			
+		}
+	}
+	
 	
 	public Textbook getTextbook(String key) {
 		return textbookStore.get(key);

@@ -59,8 +59,8 @@ public class Patron {
 		for (int i =0; i < this.checkedOutCopies.size(); i++) {
 			checkedOutList += "CopyID: " + this.checkedOutCopies.get(i).getId() + "  Title: " +
 					this.checkedOutCopies.get(i).getTitle() + "  Due: " +
-					this.checkedOutCopies.get(i).getDueDate() + "%n";
-			
+					this.checkedOutCopies.get(i).getDueDate().toString() + "%n";
+
 		}
 		
 		return checkedOutList;
@@ -72,7 +72,7 @@ public class Patron {
 		for (int i =0; i < this.holds.size(); i++) {
 			holdList += "CopyID: " + this.holds.get(i).getCopy().getId() + "  Title: " +
 					this.holds.get(i).getCopy().getTitle() + "  Due: " +
-					this.holds.get(i).getCopy().getDueDate() + " Message: " + this.holds.get(i).getMessage() + "%n";
+					this.holds.get(i).getCopy().getDueDate().toString() + " Message: " + this.holds.get(i).getMessage() + "%n";
 			
 		}
 		

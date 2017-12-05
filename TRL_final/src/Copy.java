@@ -1,5 +1,6 @@
 import java.util.Calendar;
 import java.util.Date;
+import java.text.SimpleDateFormat;
 
 public class Copy {
 	private String id;
@@ -19,7 +20,7 @@ public class Copy {
 		this.textbook = textbook;
 		this.isCheckedOut = false;
 		this.dueDate = null;
-	}
+	}		
 	
 	public String getId() {
 		return this.id;
@@ -36,6 +37,11 @@ public class Copy {
 	public void setDueDate(Calendar calendar) {
 		dueDate = calendar;
 	}
+
+	public void setCheckedOut(Boolean isCheckedOut) {
+		this.isCheckedOut = isCheckedOut;
+	}
+
 	
 	public void checkOut() {
 		this.isCheckedOut = true;
