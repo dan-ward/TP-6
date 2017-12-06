@@ -14,25 +14,24 @@ public class Controller {
 	Queue<Copy> checkInQueue = new LinkedList<Copy>();
 	
 	public Controller() {
-		this.db = new FakeDB();
 	}
 	
 	public Patron startTransaction(String patronId) {
-		this.activePatron = this.db.getPatron(patronId);
+		this.activePatron = this.db.getPatron(patronId);		
 		return this.activePatron;
 	}
 	
 	public Boolean setTransactionType(String transactionType) {
-		Boolean returnValue;
+		Boolean isValidTransactionType;
 		String action = "Transaction Type of " + transactionType;
 
 		if(transactionType.equalsIgnoreCase("out") || transactionType.equalsIgnoreCase("in")) {
-			this.transactionType = transactionType;
+			this.transactionType = transactionType.toLowerCase();
 			action = action + " successfully set";
-			returnValue = true;
+			isValidTransactionType = true;
 		} else {
 			action = action + " failed to set";
-			returnValue = false;
+			isValidTransactionType = false;
 		}
 
 		Event setTransactionType = new Event.EventBuilder(action)
@@ -41,7 +40,7 @@ public class Controller {
 				.build();
 		log.logEvent(setTransactionType);
 
-		return returnValue;
+		return isValidTransactionType;
 		
 	}
 	
@@ -58,14 +57,25 @@ public class Controller {
 	}
 
 	public String getActivePatronString() {
-		String activePatronInformation;
-				
-		activePatronInformation = "%nPatron ID: " + this.activePatron.getId() + "%nPatron Name: " + 
-				this.activePatron.getName() +
-				"%n" + this.activePatron.getCheckedOutCopyCount() + " copies checked out:%n" +
-				this.activePatron.getCheckedOutString() + "%n" + this.activePatron.getHolds().size() + 
-				" holds:%n" + this.activePatron.getHoldString();
-		
+		String activePatronInformation = "";
+			
+		if (!(this.activePatron == null))
+		{
+			activePatronInformation = "%nPatron ID: " + this.activePatron.getId() + "%nPatron Name: " + 
+					this.activePatron.getName() +
+					"%n" + this.activePatron.getCheckedOutCopyCount() + " copies checked out:%n";
+			
+			if (this.activePatron.getCheckedOutCopyCount() > 0) {
+				activePatronInformation += this.activePatron.getCheckedOutString() + "%n";  
+			}
+			
+			activePatronInformation += this.activePatron.getHolds().size() + " holds:%n" ;
+			
+			if (this.activePatron.getHolds().size() > 0) {
+				activePatronInformation += this.activePatron.getHoldString();;
+			}
+			
+		}
 		return activePatronInformation;
 		
 	}  
@@ -103,7 +113,7 @@ public class Controller {
 		
 		this.setActivePatron(startTransaction(patronID));
 		action = "Initialize Transaction for Patron: " + patronID;
-
+		
 		Event validatePatron = new Event.EventBuilder(action)
 				.worker(this.activeWorker)
 				.patron(this.activePatron)

@@ -194,16 +194,50 @@ public class ControllerTest {
 		assertEquals("worker is valid", false, isWorker);
 	}
 
-
 	@Test
-	public void test_get_active_patron_string() {
+	public void test_get_active_patron_string_null_patron() {
+
 		Controller controller = new Controller();
-		Patron patron = controller.startTransaction("P1");
+		controller.initializePatronTransaction("NULL");
 		
-		assertEquals("Patron string doesn't match", "%nPatron ID: P1%nPatron Name: Test Patron One%n0 copies checked out:" +
-				"%n%n0 holds:%n", controller.getActivePatronString());
+		assertEquals("Patron string doesn't match", "", controller.getActivePatronString());	
+		
 	}
 	
+	@Test
+	public void test_get_active_patron_string_no_holds() {
+		Controller controller = new Controller();
+		controller.initializePatronTransaction("P6");
+		
+		assertEquals("Patron string doesn't match", "%nPatron ID: P6%nPatron Name: Test Patron Six%n2 " + 
+					 "copies checked out:%nCopyID: C15  Title: Test Title  Due: Mon Dec 11 11:11:11 " +
+					 "CST 2017%nCopyID: C16  Title: Intro to Java  Due: Mon Dec 11 11:11:11 CST " + 
+					 "2017%n%n0 holds:%n", controller.getActivePatronString());	
+	}
+
+	@Test
+	public void test_get_active_patron_string_no_copies() {
+
+		Controller controller = new Controller();
+		controller.initializePatronTransaction("P2");
+		
+		assertEquals("Patron string doesn't match", "%nPatron ID: P2%nPatron Name: Test Patron Two%n0 copies checked out:%n0 holds:%n", controller.getActivePatronString());	
+		
+	}
+
+	@Test
+	public void test_get_active_patron_string_with_hold() {
+
+		Controller controller = new Controller();
+		controller.initializePatronTransaction("P7");
+		
+		assertEquals("%nPatron ID: P7%nPatron Name: Test Patron Seven%n1 copies checked out:%nCopyID: " + 
+					 "C17  Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017%n%n1 holds:" +
+					 "%nCopyID: C17  Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017 " +
+					 "Message: overdue%n", controller.getActivePatronString());	
+		
+	}
+
 	@Test
 	public void test_get_active_patron_string_bad_ID() {
 		Controller controller = new Controller();

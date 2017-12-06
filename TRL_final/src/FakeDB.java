@@ -33,6 +33,7 @@ public class FakeDB {
 		patronStore.put("P4", new Patron("P4", "Test Patron Four"));
 		patronStore.put("P5", new Patron("P5", "Test Patron Five"));
 		patronStore.put("P6", new Patron("P6", "Test Patron Six"));
+		patronStore.put("P7", new Patron("P7", "Test Patron Seven"));
 		
 		copyStore = new HashMap<String, Copy>();
 		copyStore.put("C1", new Copy("C1", textbookStore.get("T1")));
@@ -51,22 +52,33 @@ public class FakeDB {
 		copyStore.put("C14", new Copy("C14", textbookStore.get("T7")));
 		copyStore.put("C15", new Copy("C15", textbookStore.get("T1")));
 		copyStore.put("C16", new Copy("C16", textbookStore.get("T2")));
+		copyStore.put("C17", new Copy("C17", textbookStore.get("T3")));
 	}
 
 	public FakeDB() {
+		
 		try {
 			
 			
 			Calendar tempDueDate = Calendar.getInstance();
-			tempDueDate.add(Calendar.MONTH, -1);
+			tempDueDate.set(2017, 11, 11, 11, 11, 11);
+			
 			if (!copyStore.get("C15").isCheckedOut()) {
 				copyStore.get("C15").setDueDate(tempDueDate);
 				copyStore.get("C15").setCheckedOut(true);
 				copyStore.get("C16").setDueDate(tempDueDate);
 				copyStore.get("C16").setCheckedOut(true);
 				
+				copyStore.get("C17").setDueDate(tempDueDate);
+				copyStore.get("C17").setCheckedOut(true);
+				
 				patronStore.get("P6").checkOutCopy(copyStore.get("C15"));
 				patronStore.get("P6").checkOutCopy(copyStore.get("C16"));
+				patronStore.get("P7").checkOutCopy(copyStore.get("C17"));
+				
+				Hold p7Hold = new Hold(copyStore.get("C17"),"overdue");
+				
+				patronStore.get("P7").addHold(p7Hold);
 			}
 		} catch (HoldException e) {
 			

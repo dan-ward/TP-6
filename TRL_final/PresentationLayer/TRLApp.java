@@ -7,6 +7,7 @@ public class TRLApp {
 	private static void welcomeMessage() {
 		StdOut.println("Welcome to the TRL");
 	}
+	
 	private static String getWorkerId() {
 		String workerID;
 
@@ -53,7 +54,7 @@ public class TRLApp {
 		
 		String transactionType;
 
-		StdOut.print("Please enter the transaction type (out/in): ");
+		StdOut.print("Please enter the transaction type (out/in/hold): ");
 		transactionType = StdIn.readString();
 
 		while (!TRLController.setTransactionType(transactionType)) {
@@ -150,6 +151,8 @@ public class TRLApp {
 				checkoutCopies();
 			} else if (transactionType.equals("in")) {
 				checkInCopies();
+			} else if (transactionType.equals("hold")) {
+				StdOut.println("Generate Holds not yet implemented");
 			} else {
 				StdOut.println("Sorry you entered an invalid transaction type");
 			}
