@@ -21,7 +21,6 @@ public class TRLApp {
 		}
 		
 		return workerID;
-		
 	}
 		
 	private static void loginWorker(String workerID) {
@@ -46,10 +45,6 @@ public class TRLApp {
 		TRLController.initializePatronTransaction(patronID);
 	}
 	
-	public static void clearSession() {
-		TRLController.clearSession();
-	}
-	
 	private static void printPatronInformation() {
 		StdOut.printf(TRLController.getActivePatronString());
 	}
@@ -70,18 +65,6 @@ public class TRLApp {
 		return transactionType;	
 	}
 
-	private static void addCopyToCheckoutList() {
-		
-		String copyID = getCopyId();
-
-		TRLController.addCopyToCheckoutList(copyID);
-		
-		StdOut.println(TRLController.getActiveCopyString());
-
-		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");
-
-	}
-
 	private static String getCopyId() {
 		String copyID;
 		
@@ -98,10 +81,21 @@ public class TRLApp {
 	
 	private static void initializeCopyTransaction(String copyId) {
 		TRLController.initializeCopyTransaction(copyId);
-	}
+	}	
 	
 	private static void printCopyInformation() {
 		StdOut.printf(TRLController.getActiveCopyString());
+	}
+	
+	private static void addCopyToCheckoutList() {
+		
+		String copyID = getCopyId();
+
+		TRLController.addCopyToCheckoutList(copyID);
+		
+		StdOut.println(TRLController.getActiveCopyString());
+
+		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");
 	}
 	
 	private static void checkoutCopies() {
@@ -120,6 +114,13 @@ public class TRLApp {
 		}
 	}
 	
+	private static void addCopyToCheckInList() {
+		String copyID = getCopyId();
+		TRLController.addCopyToCheckInList(copyID);
+		StdOut.println(TRLController.getActiveCopyString());
+		StdOut.println("Copy " + copyID + " was successfully added to the check in queue");
+	}
+	
 	public static void checkInCopies() {
 		String checkInAnother = "y";
 		while (checkInAnother.equalsIgnoreCase("y")) {
@@ -135,16 +136,8 @@ public class TRLApp {
 		}
 	}
 	
-	private static void addCopyToCheckInList() {
-		String copyID = getCopyId();
-		TRLController.addCopyToCheckInList(copyID);
-		StdOut.println(TRLController.getActiveCopyString());
-		StdOut.println("Copy " + copyID + " was successfully added to the check in queue");
-	}
-	
 	public static void lookupPatronOrCopy() {
 		String lookupType;
-		String patronID;
 		
 		StdOut.print("What would you like to lookup? (patron/copy) ");
 		lookupType = StdIn.readString().trim();
@@ -160,6 +153,9 @@ public class TRLApp {
 		}
 	}
 	
+	public static void clearSession() {
+		TRLController.clearSession();
+	}
 	
 	public static void main(String[] args) {
 		String transactionType;
@@ -184,9 +180,7 @@ public class TRLApp {
 				checkInCopies();
 				printPatronInformation();
 			} else if (transactionType.equals("lookup")) {		
-//				StdOut.println("Lookup not yet implemented");
 				lookupPatronOrCopy();
-				
 			} else if (transactionType.equals("hold")) {
 				initializePatronTransaction(getPatronID());
 				printPatronInformation();
@@ -195,7 +189,6 @@ public class TRLApp {
 				StdOut.println("Sorry you entered an invalid transaction type");
 			}
 			
-//			printPatronInformation();
 			clearSession();
 			StdOut.print("Would you like to begin another session? (y/n) ");
 			newSession = StdIn.readString();
