@@ -20,3 +20,7 @@
 /TextbookTest.class
 /Worker.class
 /WorkerTest.class
+/HoldNotices.class
+/HoldNotice.class
+/OverdueNotice.class
+/OverdueNoticeTest.class

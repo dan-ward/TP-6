@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.Date;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -85,4 +86,47 @@ public class FakeDBTest {
 		Copy copy = db.getCopy("P9");
 		assertNull("copy is not null", copy);
 	}
+	
+	@Test
+	public void test_validate_get_parton_store() {
+		FakeDB db = new FakeDB();
+		 Map<String, Patron> patronStore = db.getPatronStore();
+		assertEquals("Patron count matches in the store",7,patronStore.size());
+		
+	}
+
+	@Test
+	public void test_add_hold_notice() {
+		FakeDB db = new FakeDB();
+		Patron p = db.getPatron("P1");
+		OverdueNotice odn = new OverdueNotice(p,"test overdue notice");
+		Copy c = db.getCopy("C1");
+		odn.setCopy(c);
+		
+		db.addHoldNotice(odn);
+		
+		assertEquals("Test add hold notice",1, db.getOverdueNotices().size());
+			
+
+	}
+	
+	@Test
+	public void test_clear_hold_notice() {
+		FakeDB db = new FakeDB();
+		Patron p = db.getPatron("P1");
+		OverdueNotice odn = new OverdueNotice(p,"test overdue notice");
+		Copy c = db.getCopy("C1");
+		odn.setCopy(c);
+		
+		db.addHoldNotice(odn);
+		
+		db.clearOverdueNotices();
+		
+		assertEquals("Test clear hold notice",0, db.getOverdueNotices().size());
+			
+
+	}
+
+	
+	
 }

@@ -53,12 +53,12 @@ public class TRLApp {
 		
 		String transactionType;
 
-		StdOut.print("Please enter the transaction type (out/in/hold/lookup): ");
+		StdOut.print("Please enter the transaction type (out/in/hold/lookup/notice): ");
 		transactionType = StdIn.readString();
 
 		while (!TRLController.setTransactionType(transactionType)) {
 			StdOut.println("The transaction type of: " + transactionType + " is not valid.");
-			StdOut.print("Please enter the transaction type (out/in/hold/lookup): ");
+			StdOut.print("Please enter the transaction type (out/in/hold/lookup/notice): ");
 			transactionType = StdIn.readString();
 		}
 
@@ -162,6 +162,22 @@ public class TRLApp {
 		TRLController.placeHoldsAllPatrons();
 		StdOut.println("All Patrons have been processed and holds placed.");
 	}
+
+	private static void generateOverdueNotices() {
+		StdOut.println("Generating overdue notices for all Patrons, checking for overdue holds.");
+		TRLController.generateOverdueNotices();
+		StdOut.println("All overude notices have been generated.");
+		
+		printOverdueNotices();
+	}
+
+	private static void printOverdueNotices() {
+		StdOut.println("Prepairing to print overdue notices.");
+		StdOut.printf(TRLController.printOverdueNotices());
+		StdOut.println("All overude notices have been printed.");
+	}
+
+	
 	
 	public static void main(String[] args) {
 		String transactionType;
@@ -191,6 +207,8 @@ public class TRLApp {
 				addHolds();
 //				initializePatronTransaction(getPatronID());
 //				printPatronInformation();
+			} else if (transactionType.equals("notice")) {
+				generateOverdueNotices();
 			} else {
 				StdOut.println("Sorry you entered an invalid transaction type");
 			}

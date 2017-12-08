@@ -1,5 +1,4 @@
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,8 @@ public class Controller {
 		if(transactionType.equalsIgnoreCase("out") 
 		|| transactionType.equalsIgnoreCase("in") 
 		|| transactionType.equalsIgnoreCase("lookup")
-		|| transactionType.equalsIgnoreCase("hold")) {
+		|| transactionType.equalsIgnoreCase("hold")
+		|| transactionType.equalsIgnoreCase("notice")) {
 
 			this.transactionType = transactionType.toLowerCase();
 			action = action + " successfully set";
@@ -286,12 +286,19 @@ public class Controller {
 		{
 			if (activePatron.getValue().getCheckedOutCopyCount() > 0) {
 				List<Copy> tempCopyList = activePatron.getValue().getCheckedOutCopies();
-				
+
 				if (activePatron.getValue().getHoldCount() == 0) {
 					for (int i = 0; i < tempCopyList.size(); i++) {
 						if (tempCopyList.get(i).getDueDate().after(Calendar.getInstance().getTime())) {
 							Hold tempHold = new Hold(tempCopyList.get(i),"overdue");
-							activePatron.getValue().addHold(tempHold);							
+							activePatron.getValue().addHold(tempHold);
+							String action = "Hold Placed";
+							Event completeSession = new Event.EventBuilder(action)
+									.worker(this.activeWorker)
+									.patron(activePatron.getValue())
+									.copy(tempCopyList.get(i))
+									.build();
+							lastEventKey = this.log.logEvent(completeSession);
 						}
 					}
 					
@@ -299,6 +306,7 @@ public class Controller {
 					boolean hasHoldAlready = false;
 					patronHolds = activePatron.getValue().getHolds();
 					for (int i = 0; i < tempCopyList.size(); i++) {
+						hasHoldAlready = false;
 						for (int j = 0; j < patronHolds.size() && hasHoldAlready == false; j++) {
 							if(patronHolds.get(j).getCopy().getId() == tempCopyList.get(i).getId()) {
 								hasHoldAlready = true;
@@ -309,6 +317,13 @@ public class Controller {
 							if (tempCopyList.get(i).getDueDate().after(Calendar.getInstance().getTime())) {
 								Hold tempHold = new Hold(tempCopyList.get(i),"overdue");
 								activePatron.getValue().addHold(tempHold);
+								String action = "Hold Placed";
+								Event completeSession = new Event.EventBuilder(action)
+										.worker(this.activeWorker)
+										.patron(activePatron.getValue())
+										.copy(tempCopyList.get(i))
+										.build();
+								lastEventKey = this.log.logEvent(completeSession);
 							}
 						}
 					}
@@ -317,6 +332,47 @@ public class Controller {
 		}
 	}
 
+	public void generateOverdueNotices() {
+		Map<String, Patron> allPatrons = db.getPatronStore();
+		OverdueNotice patronHoldNotice;
+		db.clearOverdueNotices();
+		
+		for (Map.Entry<String, Patron> activePatron : allPatrons.entrySet())
+		{
+			if (activePatron.getValue().getHoldCount() > 0) {
+				patronHoldNotice = new OverdueNotice(activePatron.getValue(),"Overdue list");
+				for (int i = 0; i < activePatron.getValue().getHolds().size(); i++) {
+					patronHoldNotice.setCopy(activePatron.getValue().getHolds().get(i).getCopy());
+				}
+				db.addHoldNotice(patronHoldNotice);
+			}
+			String action = "Overdue Notice Generated";
+			Event completeSession = new Event.EventBuilder(action)
+					.worker(this.activeWorker)
+					.patron(activePatron.getValue())
+					.build();
+			lastEventKey = this.log.logEvent(completeSession);
+		}		
+
+	}
+	
+	public String printOverdueNotices() {
+		List<OverdueNotice> overdueNotices = db.getOverdueNotices();
+		String overdueNoticeString = "";
+		
+		for (int i = 0; i < overdueNotices.size(); i++) {
+			overdueNoticeString += "Patron: " + overdueNotices.get(i).getPatron().getId() + " " + overdueNotices.get(i).getPatron().getName() + "%n";
+			overdueNoticeString += overdueNotices.get(i).getMessage() + "%n";
+			for (int j=0; j < overdueNotices.get(i).getCopies().size(); j++) {
+				overdueNoticeString += "Copy: " + overdueNotices.get(i).getCopies().get(j).getId() + " " + overdueNotices.get(i).getCopies().get(j).getTitle() + " " + overdueNotices.get(i).getCopies().get(j).getDueDate() + "%n";
+			}
+			overdueNoticeString += "%n";
+		}		
+		
+		return overdueNoticeString;
+	}
+	
+	
 	public void clearSession() {
 		this.activeWorker = null;
 		this.activePatron = null;

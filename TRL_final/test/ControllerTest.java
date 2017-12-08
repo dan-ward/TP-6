@@ -94,6 +94,10 @@ public class ControllerTest {
 		
 		controller.setTransactionType("lookup");
 		assertEquals("controller transcation type != lookup", "lookup", controller.getTransactionType());
+
+		controller.setTransactionType("hold");
+		assertEquals("controller transcation type != hold", "hold", controller.getTransactionType());
+
 		
 		assertEquals("controller transaction type should be false", false, controller.setTransactionType("inout"));
 	}
@@ -212,10 +216,11 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		controller.initializePatronTransaction("P6");
 		
-		assertEquals("Patron string doesn't match", "%nPatron ID: P6%nPatron Name: Test Patron Six%n2 " + 
-					 "copies checked out:%nCopyID: C15  Title: Test Title  Due: Mon Dec 11 11:11:11 " +
-					 "CST 2017%nCopyID: C16  Title: Intro to Java  Due: Mon Dec 11 11:11:11 CST " + 
-					 "2017%n%n0 holds:%n", controller.getActivePatronString());	
+		assertEquals("Patron string doesn't match", "%nPatron ID: P6%nPatron Name: Test Patron Six%n2 copies checked out:%nCopyID: " + 
+		             "C15  Title: Test Title  Due: Mon Dec 11 11:11:11 CST 2017%nCopyID: C16  Title: Intro to Java  Due: Mon Dec 11 " + 
+				     "11:11:11 CST 2017%n%n2 holds:%nCopyID: C15  Title: Test Title  Due: Mon Dec 11 11:11:11 CST 2017 Message: " +
+		             "overdue%nCopyID: C16  Title: Intro to Java  Due: Mon Dec 11 11:11:11 CST 2017 Message: overdue%n", 
+		             controller.getActivePatronString());	
 	}
 
 	@Test
@@ -234,10 +239,10 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		controller.initializePatronTransaction("P7");
 		
-		assertEquals("%nPatron ID: P7%nPatron Name: Test Patron Seven%n1 copies checked out:%nCopyID: " + 
-					 "C17  Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017%n%n1 holds:" +
-					 "%nCopyID: C17  Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017 " +
-					 "Message: overdue%n", controller.getActivePatronString());	
+		assertEquals("Active patron string","%nPatron ID: P7%nPatron Name: Test Patron Seven%n2 copies checked out:%nCopyID: C17  " +
+		             "Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017%nCopyID: C18  Title: NoSQL  Due: Mon Dec 11 " +
+				     "11:11:11 CST 2017%n%n1 holds:%nCopyID: C17  Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017 " +
+		             "Message: overdue%n", controller.getActivePatronString());	
 		
 	}
 
@@ -457,7 +462,22 @@ public class ControllerTest {
 		
 		controller.clearSession();
 		assertEquals("active patron should be null", null, controller.getActivePatron());
+
+		controller = new Controller();
+		worker = controller.getWorkerObject("W2");
+		patron = controller.startTransaction("P2");
 		
+		controller.setTransactionType("in");
+		copy = controller.addCopyToCheckInList("C2");
+
+		try {
+			controller.completeSession();
+		} catch (HoldException e1) {
+			// do nothing
+		}
+		controller.clearSession();
+		assertEquals("active patron should be null", null, controller.getActivePatron());
+
 	}
 	
 	@Test
@@ -467,5 +487,32 @@ public class ControllerTest {
 		
 		assertEquals("Copy does not match expected value", "C1", controller.activeCopy.getId());
 	}
+	
+	
+	@Test
+	public void test_place_holds_all_patrons() {
+		Controller controller = new Controller();
+		controller.placeHoldsAllPatrons();
+		
+		controller.startTransaction("P2");
+		
+		assertEquals("Patrons with no checkouts have no holds",0,controller.activePatron.getHoldCount());
+	}
+	
+	
+	@Test
+	public void test_print_overdue_notices() {
+		Controller controller = new Controller();
+		controller.generateOverdueNotices();
+		controller.printOverdueNotices();
+		
+		assertEquals("Overdue notices print notice", "Patron: P6 Test Patron Six%nOverdue list%nCopy: C15 Test Title Mon Dec 11 11:11:11 " +
+		             "CST 2017%nCopy: C16 Intro to Java Mon Dec 11 11:11:11 CST 2017%n%nPatron: P7 Test Patron Seven%nOverdue list%nCopy: " +
+				     "C17 100 Uses for Bubble Gum Mon Dec 11 11:11:11 CST 2017%nCopy: C18 NoSQL Mon Dec 11 11:11:11 CST 2017%n%n",
+				     controller.printOverdueNotices());
+	}
+	
+	
+	
 	
 }

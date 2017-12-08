@@ -1,5 +1,6 @@
 
 public class Hold {
+	
 	private Copy copy;
 	private String message;
 	

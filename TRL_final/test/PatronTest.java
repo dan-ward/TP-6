@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -54,6 +55,9 @@ public class PatronTest {
 		}
 		
 		assertEquals("copy not checked out, in correctly", true, patron.checkInCopy(copy));
+		
+		patron.checkInCopy(copy); //Clean up FakeDB
+		
 	}
 	
 	@Test
@@ -77,6 +81,9 @@ public class PatronTest {
 		
 		patron.checkInCopy(copy2);
 		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
+		
+		patron.checkInCopy(copy1); //Clean up FakeDB
+		patron.checkInCopy(copy2); //Clean up FakeDB
 		
 	}
 
@@ -126,6 +133,10 @@ public class PatronTest {
 		
 		assertEquals("exception message should match", "HoldException: 1 hold!", holdMessages);
 		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
+		
+		patron.checkInCopy(copy1); //Clean up FakeDB
+		patron.checkInCopy(copy2); //Clean up FakeDB
+
 	}	
 
 	@Test
@@ -158,4 +169,25 @@ public class PatronTest {
 				
 	}
 
+	@Test
+	public void test_validate_get_checked_out_copies() {
+		FakeDB db = new FakeDB();
+		Patron activePatron = db.getPatron("P7");
+		
+		List<Copy> patronCheckedOutCopies = activePatron.getCheckedOutCopies(); 
+		
+		assertEquals("Copy count matches what is in the data store",2,patronCheckedOutCopies.size());
+		
+	}
+
+	@Test
+	public void test_validate_get_hold_count() {
+		FakeDB db = new FakeDB();
+		Patron activePatron = db.getPatron("P7");
+		
+		assertEquals("Hold count matches what is in the data store",1,activePatron.getHoldCount());
+		
+	}
+
+	
 }

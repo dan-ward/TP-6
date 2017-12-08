@@ -10,6 +10,7 @@ public class FakeDB {
 	private static Map<String, Worker> workerStore;
 	private static Map<String, Patron> patronStore;
 	private static Map<String, Copy> copyStore;
+	private static List<OverdueNotice> overdueNotices = new ArrayList<OverdueNotice>();
 	
 	static {
 		textbookStore = new HashMap<String, Textbook>();
@@ -53,6 +54,8 @@ public class FakeDB {
 		copyStore.put("C15", new Copy("C15", textbookStore.get("T1")));
 		copyStore.put("C16", new Copy("C16", textbookStore.get("T2")));
 		copyStore.put("C17", new Copy("C17", textbookStore.get("T3")));
+		copyStore.put("C18", new Copy("C18", textbookStore.get("T4")));
+		
 	}
 
 	public FakeDB() {
@@ -71,10 +74,14 @@ public class FakeDB {
 				
 				copyStore.get("C17").setDueDate(tempDueDate);
 				copyStore.get("C17").setCheckedOut(true);
+				copyStore.get("C18").setDueDate(tempDueDate);
+				copyStore.get("C18").setCheckedOut(true);
+
 				
 				patronStore.get("P6").checkOutCopy(copyStore.get("C15"));
 				patronStore.get("P6").checkOutCopy(copyStore.get("C16"));
 				patronStore.get("P7").checkOutCopy(copyStore.get("C17"));
+				patronStore.get("P7").checkOutCopy(copyStore.get("C18"));
 				
 				Hold p7Hold = new Hold(copyStore.get("C17"),"overdue");
 				
@@ -130,4 +137,17 @@ public class FakeDB {
 	public Map<String, Patron> getPatronStore() {
 		return patronStore;
 	}
+	
+	public void addHoldNotice(OverdueNotice overdueNotice) {
+		overdueNotices.add(overdueNotice);
+	}
+	
+	public List<OverdueNotice> getOverdueNotices() {
+		return overdueNotices;
+	}
+
+	public void clearOverdueNotices() {
+		overdueNotices = new ArrayList<OverdueNotice>();	
+	}
+	
 }
