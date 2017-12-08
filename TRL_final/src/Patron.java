@@ -18,6 +18,10 @@ public class Patron {
 		this.name = name;
 	}
 	
+	public List<Copy> getCheckedOutCopies() {
+		return checkedOutCopies;
+	}
+	
 	public void setId(String id) {
 		this.id = id;
 	}
@@ -81,7 +85,11 @@ public class Patron {
 	public void addHold(Hold hold) {
 		holds.add(hold);
 	}
-	
+
+	public int getHoldCount() {
+		return holds.size();
+	}
+
 	public List<Hold> getHolds() {
 		return this.holds;
 	}

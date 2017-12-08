@@ -79,6 +79,7 @@ public class FakeDB {
 				Hold p7Hold = new Hold(copyStore.get("C17"),"overdue");
 				
 				patronStore.get("P7").addHold(p7Hold);
+				
 			}
 		} catch (HoldException e) {
 			
@@ -126,4 +127,7 @@ public class FakeDB {
 		return copyStore.get(key);
 	}
 	
+	public Map<String, Patron> getPatronStore() {
+		return patronStore;
+	}
 }

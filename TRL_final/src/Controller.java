@@ -1,5 +1,8 @@
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 public class Controller {
@@ -25,7 +28,8 @@ public class Controller {
 		Boolean isValidTransactionType;
 		String action = "Transaction Type of " + transactionType;
 
-		if(transactionType.equalsIgnoreCase("out") || transactionType.equalsIgnoreCase("in")) {
+		if(transactionType.equalsIgnoreCase("out") || transactionType.equalsIgnoreCase("in") 
+			|| transactionType.equalsIgnoreCase("hold")) {
 			this.transactionType = transactionType.toLowerCase();
 			action = action + " successfully set";
 			isValidTransactionType = true;
@@ -268,6 +272,45 @@ public class Controller {
 					.build();
 			lastEventKey = this.log.logEvent(completeSession);
 			checkInQueue.remove(this.activeCopy);
+		}
+	}
+	
+	public void placeHoldsAllPatrons() {
+		Map<String, Patron> allPatrons = db.getPatronStore();
+		List<Hold> patronHolds;
+		
+		for (Map.Entry<String, Patron> activePatron : allPatrons.entrySet())
+		{
+			if (activePatron.getValue().getCheckedOutCopyCount() > 0) {
+				List<Copy> tempCopyList = activePatron.getValue().getCheckedOutCopies();
+				
+				if (activePatron.getValue().getHoldCount() == 0) {
+					for (int i = 0; i < tempCopyList.size(); i++) {
+						if (tempCopyList.get(i).getDueDate().after(Calendar.getInstance().getTime())) {
+							Hold tempHold = new Hold(tempCopyList.get(i),"overdue");
+							activePatron.getValue().addHold(tempHold);							
+						}
+					}
+					
+				}  else {	// enter for patron that has holds already so we don't double hold the same copy
+					boolean hasHoldAlready = false;
+					patronHolds = activePatron.getValue().getHolds();
+					for (int i = 0; i < tempCopyList.size(); i++) {
+						for (int j = 0; j < patronHolds.size() && hasHoldAlready == false; j++) {
+							if(patronHolds.get(j).getCopy().getId() == tempCopyList.get(i).getId()) {
+								hasHoldAlready = true;
+							}
+						}
+
+						if (hasHoldAlready == false) {
+							if (tempCopyList.get(i).getDueDate().after(Calendar.getInstance().getTime())) {
+								Hold tempHold = new Hold(tempCopyList.get(i),"overdue");
+								activePatron.getValue().addHold(tempHold);
+							}
+						}
+					}
+				}	
+			}
 		}
 	}
 	

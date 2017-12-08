@@ -133,9 +133,15 @@ public class TRLApp {
 		StdOut.println("Copy " + copyID + " was successfully added to the check in queue");
 	}
 	
+	private static void addHolds() {
+		StdOut.println("Processing all Patrons, checking for overdue copies.");
+		TRLController.placeHoldsAllPatrons();
+		StdOut.println("All Patrons have been processed and holds placed.");
+	}
+	
 	public static void main(String[] args) {
 		String transactionType;
-		
+				
 		welcomeMessage();
 		
 		String newSession = "y";
@@ -152,7 +158,7 @@ public class TRLApp {
 			} else if (transactionType.equals("in")) {
 				checkInCopies();
 			} else if (transactionType.equals("hold")) {
-				StdOut.println("Generate Holds not yet implemented");
+				addHolds();
 			} else {
 				StdOut.println("Sorry you entered an invalid transaction type");
 			}
