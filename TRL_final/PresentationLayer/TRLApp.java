@@ -46,6 +46,10 @@ public class TRLApp {
 		TRLController.initializePatronTransaction(patronID);
 	}
 	
+	public static void clearSession() {
+		TRLController.clearSession();
+	}
+	
 	private static void printPatronInformation() {
 		StdOut.printf(TRLController.getActivePatronString());
 	}
@@ -54,12 +58,12 @@ public class TRLApp {
 		
 		String transactionType;
 
-		StdOut.print("Please enter the transaction type (out/in/hold): ");
+		StdOut.print("Please enter the transaction type (out/in/hold/lookup): ");
 		transactionType = StdIn.readString();
 
 		while (!TRLController.setTransactionType(transactionType)) {
 			StdOut.println("The transaction type of: " + transactionType + " is not valid.");
-			StdOut.print("Please enter the transaction type (out/in): ");
+			StdOut.print("Please enter the transaction type (out/in/hold/lookup): ");
 			transactionType = StdIn.readString();
 		}
 
@@ -68,6 +72,17 @@ public class TRLApp {
 
 	private static void addCopyToCheckoutList() {
 		
+		String copyID = getCopyId();
+
+		TRLController.addCopyToCheckoutList(copyID);
+		
+		StdOut.println(TRLController.getActiveCopyString());
+
+		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");
+
+	}
+
+	private static String getCopyId() {
 		String copyID;
 		
 		StdOut.print("Please enter the copy ID (e.g., C1, C2, ...., C14): ");
@@ -78,15 +93,16 @@ public class TRLApp {
 			StdOut.print("Please enter a valid copy ID: ");
 			copyID = StdIn.readString();
 		}
-
-		TRLController.addCopyToCheckoutList(copyID);
-		
-		StdOut.println(TRLController.getActiveCopyString());
-
-		StdOut.println("Copy " + copyID + " was successfully added to the checkout queue");
-
+		return copyID;
 	}
-
+	
+	private static void initializeCopyTransaction(String copyId) {
+		TRLController.initializeCopyTransaction(copyId);
+	}
+	
+	private static void printCopyInformation() {
+		StdOut.printf(TRLController.getActiveCopyString());
+	}
 	
 	private static void checkoutCopies() {
 		String checkOutAnother = "y";
@@ -120,18 +136,30 @@ public class TRLApp {
 	}
 	
 	private static void addCopyToCheckInList() {
-		String copyID;
-		StdOut.print("Please enter the copy ID (e.g., C1, C2, ...., C14): ");
-		copyID = StdIn.readString();
-		while (!TRLController.validateCopy(copyID)) {
-			StdOut.println("The copy ID of: " + copyID + " is not valid.");
-			StdOut.print("Please enter a valid copy ID: ");
-			copyID = StdIn.readString();
-		}
+		String copyID = getCopyId();
 		TRLController.addCopyToCheckInList(copyID);
 		StdOut.println(TRLController.getActiveCopyString());
 		StdOut.println("Copy " + copyID + " was successfully added to the check in queue");
 	}
+	
+	public static void lookupPatronOrCopy() {
+		String lookupType;
+		String patronID;
+		
+		StdOut.print("What would you like to lookup? (patron/copy) ");
+		lookupType = StdIn.readString().trim();
+		if(lookupType.equalsIgnoreCase("patron")) {
+			initializePatronTransaction(getPatronID());
+			printPatronInformation();
+			clearSession();
+		} else if(lookupType.equalsIgnoreCase("copy")) {
+			initializeCopyTransaction(getCopyId());
+			printCopyInformation();
+			StdOut.println();
+			clearSession();
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		String transactionType;
@@ -143,21 +171,32 @@ public class TRLApp {
 		while (newSession.equalsIgnoreCase("y")) {
 		
 			loginWorker(getWorkerId());
-			initializePatronTransaction(getPatronID());
-			printPatronInformation();
 			transactionType = setTransactionType();
-			
+					
 			if (transactionType.equals("out")) {
+				initializePatronTransaction(getPatronID());
+				printPatronInformation();
 				checkoutCopies();
+				printPatronInformation();
 			} else if (transactionType.equals("in")) {
+				initializePatronTransaction(getPatronID());
+				printPatronInformation();
 				checkInCopies();
+				printPatronInformation();
+			} else if (transactionType.equals("lookup")) {		
+//				StdOut.println("Lookup not yet implemented");
+				lookupPatronOrCopy();
+				
 			} else if (transactionType.equals("hold")) {
+				initializePatronTransaction(getPatronID());
+				printPatronInformation();
 				StdOut.println("Generate Holds not yet implemented");
 			} else {
 				StdOut.println("Sorry you entered an invalid transaction type");
 			}
 			
-			printPatronInformation();
+//			printPatronInformation();
+			clearSession();
 			StdOut.print("Would you like to begin another session? (y/n) ");
 			newSession = StdIn.readString();
 		}

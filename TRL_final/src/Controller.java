@@ -25,7 +25,9 @@ public class Controller {
 		Boolean isValidTransactionType;
 		String action = "Transaction Type of " + transactionType;
 
-		if(transactionType.equalsIgnoreCase("out") || transactionType.equalsIgnoreCase("in")) {
+		if(transactionType.equalsIgnoreCase("out") 
+		|| transactionType.equalsIgnoreCase("in") 
+		|| transactionType.equalsIgnoreCase("lookup")) {
 			this.transactionType = transactionType.toLowerCase();
 			action = action + " successfully set";
 			isValidTransactionType = true;
@@ -119,18 +121,33 @@ public class Controller {
 				.patron(this.activePatron)
 				.build();
 		log.logEvent(validatePatron);
-		
+	}
+	
+	public void initializeCopyTransaction(String copyId) {
+		this.activeCopy = this.db.getCopy(copyId);
+		String action = "Initialize Transaction for Copy: " + copyId;
+		Event validateCopy = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.copy(this.activeCopy)
+				.build();
+		log.logEvent(validateCopy);		
+	}
+	
+	public void clearSession() {
+		this.activeWorker = null;
+		this.activePatron = null;
+		this.activeCopy = null;
 	}
 	
 
 	public Copy addCopyToCheckoutList(String copyId) {
-		this.activeCopy = this.db.getCopy(copyId);
+		initializeCopyTransaction(copyId);
 		checkOutQueue.add(this.activeCopy);
 		return this.activeCopy;
 	}
 	
 	public Copy addCopyToCheckInList(String copyId) {
-		this.activeCopy = this.db.getCopy(copyId);
+		initializeCopyTransaction(copyId);
 		checkInQueue.add(this.activeCopy);
 		return this.activeCopy;
 	}

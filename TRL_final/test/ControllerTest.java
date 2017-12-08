@@ -92,6 +92,9 @@ public class ControllerTest {
 		controller.setTransactionType("in");
 		assertEquals("controller transaction type != in", "in", controller.getTransactionType());
 		
+		controller.setTransactionType("lookup");
+		assertEquals("controller transcation type != lookup", "lookup", controller.getTransactionType());
+		
 		assertEquals("controller transaction type should be false", false, controller.setTransactionType("inout"));
 	}
 	
@@ -436,6 +439,33 @@ public class ControllerTest {
 		
 //		copy.checkIn();
 //		patron.checkInCopy(copy);
+	}
+	
+	@Test
+	public void test_clear_session() {
+		Controller controller = new Controller();
+		Worker worker = controller.getWorkerObject("W2");
+		Patron patron = controller.startTransaction("P2");
+		
+		controller.setTransactionType("out");
+		Copy copy = controller.addCopyToCheckoutList("C2");
+		try {
+			controller.completeSession();
+		} catch (HoldException e1) {
+			// do nothing
+		}
+		
+		controller.clearSession();
+		assertEquals("active patron should be null", null, controller.getActivePatron());
+		
+	}
+	
+	@Test
+	public void test_initializeCopyTransaction_valid_copy() {
+		Controller controller = new Controller();
+		controller.initializeCopyTransaction("C1");
+		
+		assertEquals("Copy does not match expected value", "C1", controller.activeCopy.getId());
 	}
 	
 }
