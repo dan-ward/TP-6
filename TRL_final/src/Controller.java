@@ -28,8 +28,11 @@ public class Controller {
 		Boolean isValidTransactionType;
 		String action = "Transaction Type of " + transactionType;
 
-		if(transactionType.equalsIgnoreCase("out") || transactionType.equalsIgnoreCase("in") 
-			|| transactionType.equalsIgnoreCase("hold")) {
+		if(transactionType.equalsIgnoreCase("out") 
+		|| transactionType.equalsIgnoreCase("in") 
+		|| transactionType.equalsIgnoreCase("lookup")
+		|| transactionType.equalsIgnoreCase("hold")) {
+
 			this.transactionType = transactionType.toLowerCase();
 			action = action + " successfully set";
 			isValidTransactionType = true;
@@ -52,135 +55,6 @@ public class Controller {
 		return this.transactionType;
 	}
 	
-	public Patron getActivePatron() {
-		return this.activePatron;
-	}
-
-	public void setActivePatron(Patron activePatron) {
-		this.activePatron = activePatron;
-	}
-
-	public String getActivePatronString() {
-		String activePatronInformation = "";
-			
-		if (!(this.activePatron == null))
-		{
-			activePatronInformation = "%nPatron ID: " + this.activePatron.getId() + "%nPatron Name: " + 
-					this.activePatron.getName() +
-					"%n" + this.activePatron.getCheckedOutCopyCount() + " copies checked out:%n";
-			
-			if (this.activePatron.getCheckedOutCopyCount() > 0) {
-				activePatronInformation += this.activePatron.getCheckedOutString() + "%n";  
-			}
-			
-			activePatronInformation += this.activePatron.getHolds().size() + " holds:%n" ;
-			
-			if (this.activePatron.getHolds().size() > 0) {
-				activePatronInformation += this.activePatron.getHoldString();;
-			}
-			
-		}
-		return activePatronInformation;
-		
-	}  
-
-	public String getActiveCopyString() {
-				
-		return "Copy ID: " + this.activeCopy.getId() + " Title Name: " + this.activeCopy.getTitle();
-	}  
-
-	
-	public boolean validatePatron(String patronID) {
-		Boolean isValidPatron;
-		String action;
-		
-		if (this.db.validatePatronID(patronID)) {
-			action = "Validated Patron: " + patronID;
-			isValidPatron = true;
-		} else {
-			action = "Failed to Validated Patron: " + patronID;
-			isValidPatron = false;
-		}
-
-		Event validatePatron = new Event.EventBuilder(action)
-				.worker(this.activeWorker)
-				.patron(this.activePatron)
-				.build();
-		log.logEvent(validatePatron);
-
-		return isValidPatron;
-		
-	}
-	
-	public void initializePatronTransaction(String patronID) {
-		String action;
-		
-		this.setActivePatron(startTransaction(patronID));
-		action = "Initialize Transaction for Patron: " + patronID;
-		
-		Event validatePatron = new Event.EventBuilder(action)
-				.worker(this.activeWorker)
-				.patron(this.activePatron)
-				.build();
-		log.logEvent(validatePatron);
-		
-	}
-	
-
-	public Copy addCopyToCheckoutList(String copyId) {
-		this.activeCopy = this.db.getCopy(copyId);
-		checkOutQueue.add(this.activeCopy);
-		return this.activeCopy;
-	}
-	
-	public Copy addCopyToCheckInList(String copyId) {
-		this.activeCopy = this.db.getCopy(copyId);
-		checkInQueue.add(this.activeCopy);
-		return this.activeCopy;
-	}
-
-	public boolean validateCopy(String copyID) {
-		Boolean isValidCopy;
-		String action;
-				
-		if (this.db.validateCopyID(copyID)) {
-			action = "Copy Validated, Copy ID: " + copyID; 
-			isValidCopy = true; 
-		} else {
-			action = "Copy Failed to Validate, Copy ID: " + copyID;
-			isValidCopy = false;
-		}
-
-		Event validateCopy = new Event.EventBuilder(action)
-				.worker(this.activeWorker)
-				.patron(this.activePatron)
-				.copy(this.activeCopy)
-				.build();
-		log.logEvent(validateCopy);
-		
-		return isValidCopy;
-		
-	}
-	
-	public void processCheckoutCopy(String copyID) {
-		String action;
-		
-		this.activeCopy = this.addCopyToCheckoutList(copyID);
-		action = "Copy Successfully Checked Out, Copy ID: " + copyID; 
-
-		Event checkOutCopy = new Event.EventBuilder(action)
-				.worker(this.activeWorker)
-				.patron(this.activePatron)
-				.copy(this.activeCopy)
-				.build();
-		log.logEvent(checkOutCopy);
-		
-	}
-	
-	
-	public Event getLastEvent() {
-		return log.getEvent(lastEventKey);
-	}
 	
 	public boolean validateWorker(String workerID) {
 		Boolean isValidWorker;
@@ -224,14 +98,143 @@ public class Controller {
 		return this.activeWorker;
 	}
 	
+	public void setActivePatron(Patron activePatron) {
+		this.activePatron = activePatron;
+	}
+	
+	public boolean validatePatron(String patronID) {
+		Boolean isValidPatron;
+		String action;
+		
+		if (this.db.validatePatronID(patronID)) {
+			action = "Validated Patron: " + patronID;
+			isValidPatron = true;
+		} else {
+			action = "Failed to Validated Patron: " + patronID;
+			isValidPatron = false;
+		}
+
+		Event validatePatron = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.build();
+		log.logEvent(validatePatron);
+
+		return isValidPatron;
+	}
+	
+	public void initializePatronTransaction(String patronID) {
+		String action;
+		
+		this.setActivePatron(startTransaction(patronID));
+		action = "Initialize Transaction for Patron: " + patronID;
+		
+		Event validatePatron = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.build();
+		log.logEvent(validatePatron);
+	}	
+	
+	public Patron getActivePatron() {
+		return this.activePatron;
+	}
+
+	public String getActivePatronString() {
+		String activePatronInformation = "";
+			
+		if (!(this.activePatron == null))
+		{
+			activePatronInformation = "%nPatron ID: " + this.activePatron.getId() + "%nPatron Name: " + 
+					this.activePatron.getName() +
+					"%n" + this.activePatron.getCheckedOutCopyCount() + " copies checked out:%n";
+			
+			if (this.activePatron.getCheckedOutCopyCount() > 0) {
+				activePatronInformation += this.activePatron.getCheckedOutString() + "%n";  
+			}
+			
+			activePatronInformation += this.activePatron.getHolds().size() + " holds:%n" ;
+			
+			if (this.activePatron.getHolds().size() > 0) {
+				activePatronInformation += this.activePatron.getHoldString();;
+			}
+			
+		}
+		return activePatronInformation;
+	}
+	
+	public boolean validateCopy(String copyID) {
+		Boolean isValidCopy;
+		String action;
+				
+		if (this.db.validateCopyID(copyID)) {
+			action = "Copy Validated, Copy ID: " + copyID; 
+			isValidCopy = true; 
+		} else {
+			action = "Copy Failed to Validate, Copy ID: " + copyID;
+			isValidCopy = false;
+		}
+
+		Event validateCopy = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.copy(this.activeCopy)
+				.build();
+		log.logEvent(validateCopy);
+		
+		return isValidCopy;
+	}
+	
+	public void initializeCopyTransaction(String copyId) {
+		this.activeCopy = this.db.getCopy(copyId);
+		String action = "Initialize Transaction for Copy: " + copyId;
+		Event validateCopy = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.copy(this.activeCopy)
+				.build();
+		log.logEvent(validateCopy);		
+	}
+
+	public String getActiveCopyString() {
+				
+		return "Copy ID: " + this.activeCopy.getId() + " Title Name: " + this.activeCopy.getTitle();
+	}  
+
+	public Copy addCopyToCheckoutList(String copyId) {
+		initializeCopyTransaction(copyId);
+		checkOutQueue.add(this.activeCopy);
+		return this.activeCopy;
+	}
+	
 	public Queue<Copy> getCheckOutQueue() {
 		return this.checkOutQueue;
+	}
+	
+	public void processCheckoutCopy(String copyID) {
+		String action;
+		
+		this.activeCopy = this.addCopyToCheckoutList(copyID);
+		action = "Copy Successfully Checked Out, Copy ID: " + copyID; 
+
+		Event checkOutCopy = new Event.EventBuilder(action)
+				.worker(this.activeWorker)
+				.patron(this.activePatron)
+				.copy(this.activeCopy)
+				.build();
+		log.logEvent(checkOutCopy);
+		
+	}
+	
+	public Copy addCopyToCheckInList(String copyId) {
+		initializeCopyTransaction(copyId);
+		checkInQueue.add(this.activeCopy);
+		return this.activeCopy;
 	}
 	
 	public Queue<Copy> getCheckInQueue() {
 		return this.checkInQueue;
 	}
-	
+
 	public void completeSession() throws HoldException {
 		
 		if (this.transactionType.equalsIgnoreCase("out")) {
@@ -313,9 +316,19 @@ public class Controller {
 			}
 		}
 	}
+
+	public void clearSession() {
+		this.activeWorker = null;
+		this.activePatron = null;
+		this.activeCopy = null;
+	}	
+
 	
 	public Log getLog() {
 		return this.log;
 	}
 	
+	public Event getLastEvent() {
+		return log.getEvent(lastEventKey);
+	}
 }
