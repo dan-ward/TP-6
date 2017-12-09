@@ -136,10 +136,10 @@ public class TRLApp {
 		}
 	}
 	
-	public static void lookupPatronOrCopy() {
+	public static void lookup() {
 		String lookupType;
 		
-		StdOut.print("What would you like to lookup? (patron/copy) ");
+		StdOut.print("What would you like to lookup? (patron/copy/eventLog) ");
 		lookupType = StdIn.readString().trim();
 		if(lookupType.equalsIgnoreCase("patron")) {
 			initializePatronTransaction(getPatronID());
@@ -150,7 +150,13 @@ public class TRLApp {
 			printCopyInformation();
 			StdOut.println();
 			clearSession();
+		} else if(lookupType.equalsIgnoreCase("eventLog") ) {
+			printLog();
 		}
+	}
+	
+	private static void printLog() {
+		StdOut.print(TRLController.getLog().toString());
 	}
 	
 	public static void clearSession() {
@@ -176,8 +182,6 @@ public class TRLApp {
 		StdOut.printf(TRLController.printOverdueNotices());
 		StdOut.println("All overude notices have been printed.");
 	}
-
-	
 	
 	public static void main(String[] args) {
 		String transactionType;
@@ -202,7 +206,7 @@ public class TRLApp {
 				checkInCopies();
 				printPatronInformation();
 			} else if (transactionType.equals("lookup")) {		
-				lookupPatronOrCopy();
+				lookup();
 			} else if (transactionType.equals("hold")) {
 				addHolds();
 //				initializePatronTransaction(getPatronID());
