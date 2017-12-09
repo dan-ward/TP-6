@@ -209,8 +209,6 @@ public class TRLApp {
 				lookup();
 			} else if (transactionType.equals("hold")) {
 				addHolds();
-//				initializePatronTransaction(getPatronID());
-//				printPatronInformation();
 			} else if (transactionType.equals("notice")) {
 				generateOverdueNotices();
 			} else {
