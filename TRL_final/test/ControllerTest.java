@@ -216,10 +216,10 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		controller.initializePatronTransaction("P6");
 		
-		assertEquals("Patron string doesn't match", "%nPatron ID: P6%nPatron Name: Test Patron Six%n2 copies checked out:%nCopyID: " + 
-		             "C15  Title: Test Title  Due: Mon Dec 11 11:11:11 CST 2017%nCopyID: C16  Title: Intro to Java  Due: Mon Dec 11 " + 
-				     "11:11:11 CST 2017%n%n2 holds:%nCopyID: C15  Title: Test Title  Due: Mon Dec 11 11:11:11 CST 2017 Message: " +
-		             "overdue%nCopyID: C16  Title: Intro to Java  Due: Mon Dec 11 11:11:11 CST 2017 Message: overdue%n", 
+		assertEquals("%nPatron ID: P6%nPatron Name: Test Patron Six%n2 copies checked out:%nCopyID: C15  Title: Test Title  " +
+		             "Due: Sat Nov 11 11:11:11 CST 2017%nCopyID: C16  Title: Intro to Java  Due: Sat Nov 11 11:11:11 CST " +
+				     "2017%n%n2 holds:%nCopyID: C15  Title: Test Title  Due: Sat Nov 11 11:11:11 CST 2017 Message: " + 
+		             "overdue%nCopyID: C16  Title: Intro to Java  Due: Sat Nov 11 11:11:11 CST 2017 Message: overdue%n", 
 		             controller.getActivePatronString());	
 	}
 
@@ -239,10 +239,10 @@ public class ControllerTest {
 		Controller controller = new Controller();
 		controller.initializePatronTransaction("P7");
 		
-		assertEquals("Active patron string","%nPatron ID: P7%nPatron Name: Test Patron Seven%n2 copies checked out:%nCopyID: C17  " +
-		             "Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017%nCopyID: C18  Title: NoSQL  Due: Mon Dec 11 " +
-				     "11:11:11 CST 2017%n%n1 holds:%nCopyID: C17  Title: 100 Uses for Bubble Gum  Due: Mon Dec 11 11:11:11 CST 2017 " +
-		             "Message: overdue%n", controller.getActivePatronString());	
+		assertEquals("Active Patron String with Holds didn't match" , "%nPatron ID: P7%nPatron Name: Test Patron Seven%n2 copies " +
+		             "checked out:%nCopyID: C17  Title: 100 Uses for Bubble Gum  Due: Sat Nov 11 11:11:11 CST 2017%nCopyID: C18  " +
+				     "Title: NoSQL  Due: Sat Nov 11 11:11:11 CST 2017%n%n1 holds:%nCopyID: C17  Title: 100 Uses for Bubble Gum  " +
+		             "Due: Sat Nov 11 11:11:11 CST 2017 Message: overdue%n", controller.getActivePatronString());	
 		
 	}
 
@@ -506,10 +506,10 @@ public class ControllerTest {
 		controller.generateOverdueNotices();
 		controller.printOverdueNotices();
 		
-		assertEquals("Overdue notices print notice", "Patron: P6 Test Patron Six%nOverdue list%nCopy: C15 Test Title Mon Dec 11 11:11:11 " +
-		             "CST 2017%nCopy: C16 Intro to Java Mon Dec 11 11:11:11 CST 2017%n%nPatron: P7 Test Patron Seven%nOverdue list%nCopy: " +
-				     "C17 100 Uses for Bubble Gum Mon Dec 11 11:11:11 CST 2017%nCopy: C18 NoSQL Mon Dec 11 11:11:11 CST 2017%n%n",
-				     controller.printOverdueNotices());
+		assertEquals("Overdue notices print notice", "Patron: P6 Test Patron Six%nOverdue list%nCopy: C15 Test Title Sat Nov 11 " +
+		             "11:11:11 CST 2017%nCopy: C16 Intro to Java Sat Nov 11 11:11:11 CST 2017%n%nPatron: P7 Test Patron Seven%n" +
+				     "Overdue list%nCopy: C17 100 Uses for Bubble Gum Sat Nov 11 11:11:11 CST 2017%nCopy: C18 NoSQL Sat Nov 11 " +
+		             "11:11:11 CST 2017%n%n", controller.printOverdueNotices());
 	}
 	
 	

@@ -289,7 +289,7 @@ public class Controller {
 
 				if (activePatron.getValue().getHoldCount() == 0) {
 					for (int i = 0; i < tempCopyList.size(); i++) {
-						if (tempCopyList.get(i).getDueDate().after(Calendar.getInstance().getTime())) {
+						if (tempCopyList.get(i).getDueDate().before(Calendar.getInstance().getTime())) {
 							Hold tempHold = new Hold(tempCopyList.get(i),"overdue");
 							activePatron.getValue().addHold(tempHold);
 							String action = "Hold Placed";
@@ -314,7 +314,7 @@ public class Controller {
 						}
 
 						if (hasHoldAlready == false) {
-							if (tempCopyList.get(i).getDueDate().after(Calendar.getInstance().getTime())) {
+							if (tempCopyList.get(i).getDueDate().before(Calendar.getInstance().getTime())) {
 								Hold tempHold = new Hold(tempCopyList.get(i),"overdue");
 								activePatron.getValue().addHold(tempHold);
 								String action = "Hold Placed";

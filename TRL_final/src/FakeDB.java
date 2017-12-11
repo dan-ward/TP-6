@@ -64,7 +64,7 @@ public class FakeDB {
 			
 			
 			Calendar tempDueDate = Calendar.getInstance();
-			tempDueDate.set(2017, 11, 11, 11, 11, 11);
+			tempDueDate.set(2017, 10, 11, 11, 11, 11);
 			
 			if (!copyStore.get("C15").isCheckedOut()) {
 				copyStore.get("C15").setDueDate(tempDueDate);
