@@ -114,7 +114,9 @@ public class PatronTest {
 		Textbook textbook = new Textbook("Test hold title");
 		Copy copy1 = new Copy("C1", textbook);
 		Copy copy2 = new Copy("C2", textbook);
+		Copy copy3 = new Copy("C3", textbook);
 		Hold hold = new Hold(copy1, "Overdue book");
+		Hold hold2 = new Hold(copy3, "overdue book");
 		Patron patron = new Patron("P3", "Test hold patron");
 		
 		String holdMessages = "";
@@ -133,9 +135,20 @@ public class PatronTest {
 		
 		assertEquals("exception message should match", "HoldException: 1 hold!", holdMessages);
 		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
+
+		patron.addHold(hold2);
+		try {			
+			patron.checkOutCopy(copy2);
+		} catch (HoldException e) {
+			holdMessages += e.toString();
+		}
+
+		assertEquals("exception message should match", "HoldException: 1 hold!HoldException: 2 holds!", holdMessages);
+		assertEquals("patron should have 1 copy checked out", 1, patron.getCheckedOutCopyCount());
 		
 		patron.checkInCopy(copy1); //Clean up FakeDB
 		patron.checkInCopy(copy2); //Clean up FakeDB
+		patron.checkInCopy(copy3); //Clean up FakeDB
 
 	}	
 

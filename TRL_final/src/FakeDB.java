@@ -88,7 +88,7 @@ public class FakeDB {
 				patronStore.get("P7").addHold(p7Hold);
 				
 			}
-		} catch (HoldException e) {
+		} catch (Exception e) {
 			
 		}
 	}
